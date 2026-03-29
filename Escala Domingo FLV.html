@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)file:///C:/Users/willi/Downloads/escala-domingo-flv-fix.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0D7EA4">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Escala FLV">
+<meta name="application-name" content="Escala FLV">
+<meta name="description" content="Gerencie escalas de domingos automaticamente">
+<meta name="msapplication-TileColor" content="#0D7EA4">
+<title>Escala Domingo FLV</title>
+
+<!-- PWA Manifest inline -->
+<script>
+const manifestData = {
+  name: "Escala Domingo FLV",
+  short_name: "Escala FLV",
+  description: "Gerencie escalas de domingos automaticamente",
+  start_url: "./",
+  display: "standalone",
+  background_color: "#0D7EA4",
+  theme_color: "#0D7EA4",
+  orientation: "portrait",
+  icons: [
+    { src: "data:image/svg+xml," + encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='32' fill='%230D7EA4'/><text x='96' y='115' font-size='90' text-anchor='middle'>🥬</text><rect x='40' y='130' width='112' height='12' rx='6' fill='white' opacity='0.4'/></svg>`), sizes: "192x192", type: "image/svg+xml" },
+    { src: "data:image/svg+xml," + encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='80' fill='%230D7EA4'/><text x='256' y='310' font-size='240' text-anchor='middle'>🥬</text><rect x='100' y='350' width='312' height='32' rx='16' fill='white' opacity='0.4'/></svg>`), sizes: "512x512", type: "image/svg+xml" }
+  ]
+};
+const blob = new Blob([JSON.stringify(manifestData)], {type:'application/json'});
+const manifestUrl = URL.createObjectURL(blob);
+document.addEventListener('DOMContentLoaded', () => {
+  const link = document.createElement('link');
+  link.rel = 'manifest'; link.href = manifestUrl;
+  document.head.appendChild(link);
+});
+</script>
+
+<!-- Apple Touch Icon SVG inline -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,&lt;svg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 180 180&#39;&gt;&lt;rect width=&#39;180&#39; height=&#39;180&#39; rx=&#39;40&#39; fill=&#39;%230D7EA4&#39;/&gt;&lt;text x=&#39;90&#39; y=&#39;115&#39; font-size=&#39;90&#39; text-anchor=&#39;middle&#39;&gt;%F0%9F%A5%AC&lt;/text&gt;&lt;/svg&gt;">
+
+
+<style>@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@500;600;700&display=swap");</style>
+
+<style>
+:root {
+  --primary: #0D7EA4;
+  --primary-dark: #065A7A;
+  --secondary: #6366F1;
+  --accent: #EC4899;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --bg: #F0F4F8;
+  --surface: #FFFFFF;
+  --surface2: #F8FAFC;
+  --fg: #0F172A;
+  --fg2: #475569;
+  --fg3: #94A3B8;
+  --border: #E2E8F0;
+  --shadow: rgba(15,23,42,0.08);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --tab-height: 64px;
+}
+.dark {
+  --bg: #0F172A;
+  --surface: #1E293B;
+  --surface2: #162032;
+  --fg: #F1F5F9;
+  --fg2: #94A3B8;
+  --fg3: #475569;
+  --border: #2D3F55;
+  --shadow: rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: 'Nunito', 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  height: 100vh;
+  overflow: hidden;
+  transition: background 0.3s, color 0.3s;
+  user-select: none;
+}
+.app { display: flex; flex-direction: column; height: 100vh; max-width: 430px; margin: 0 auto; position: relative; background: var(--bg); box-shadow: 0 0 60px rgba(0,0,0,0.15); }
+.screen { flex: 1; overflow-y: auto; overflow-x: hidden; padding-bottom: var(--tab-height); scroll-behavior: smooth; }
+.screen::-webkit-scrollbar { width: 3px; }
+.screen::-webkit-scrollbar-track { background: transparent; }
+.screen::-webkit-scrollbar-thumb { background: var(--fg3); border-radius: 3px; }
+
+/* GRADIENT HEADER */
+.grad-header {
+  background: linear-gradient(135deg, #0D7EA4 0%, #065A7A 100%);
+  padding: 48px 20px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.grad-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.grad-header-top { position: relative; }
+.grad-header h1 { color: #fff; font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 700; line-height: 1.2; padding-right: 90px; }
+.grad-header p { color: rgba(255,255,255,0.75); font-size: 13px; margin-top: 4px; }
+.header-actions { position: absolute; top: 0; right: 0; display: flex; gap: 8px; }
+.icon-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%; background: rgba(255,255,255,0.15);
+  border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: white; transition: all 0.2s;
+}
+.icon-btn:active { transform: scale(0.92); background: rgba(255,255,255,0.25); }
+.icon-btn .material-icons-round { font-size: 20px; }
+.material-icons-round {
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+  font-style: normal;
+  font-size: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  line-height: 1;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+}
+/* Tab icons slightly larger for emoji */
+.tab-item .material-icons-round { font-size: 22px; }
+.tab-item.active .material-icons-round { filter: drop-shadow(0 0 2px rgba(13,126,164,0.5)); }
+/* Adjust icon sizes per context */
+.icon-btn .material-icons-round { font-size: 18px; }
+.action-icon-btn .material-icons-round { font-size: 16px; }
+.stat-icon .material-icons-round { font-size: 20px; }
+.logo-icon { font-size: 36px; margin-bottom: 6px; display: block; }
+
+/* STAT CARDS */
+.stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px; }
+.stat-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 12px var(--shadow);
+  transition: transform 0.15s;
+}
+.stat-card:active { transform: scale(0.97); }
+.stat-card .number { font-size: 36px; font-weight: 900; color: var(--fg); }
+.stat-card .label { font-size: 12px; color: var(--fg2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.stat-icon.blue { background: #EFF8FF; color: var(--primary); }
+.stat-icon.pink { background: #FFF0F7; color: var(--accent); }
+.dark .stat-icon.blue { background: rgba(13,126,164,0.15); }
+.dark .stat-icon.pink { background: rgba(236,72,153,0.15); }
+
+/* ACTION CARDS */
+.action-cards { padding: 0 16px; display: flex; flex-direction: column; gap: 12px; }
+.action-card {
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all 0.2s; position: relative; overflow: hidden;
+}
+.action-card:active { transform: scale(0.98); }
+.action-card h3 { color: white; font-family: 'Poppins', sans-serif; font-size: 17px; font-weight: 600; }
+.action-card p { color: rgba(255,255,255,0.8); font-size: 13px; margin-top: 2px; }
+.action-card-icon { width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; font-size: 22px; }
+.card-purple { background: linear-gradient(135deg, #6366F1, #4F46E5); }
+.card-green { background: linear-gradient(135deg, #10B981, #059669); }
+.card-pink { background: linear-gradient(135deg, #EC4899, #BE185D); }
+
+/* HOW IT WORKS */
+.info-section { margin: 16px; background: var(--surface); border-radius: var(--radius); padding: 16px; box-shadow: 0 2px 8px var(--shadow); }
+.info-section .info-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.info-section .info-header .material-icons-round { color: var(--primary); font-size: 22px; }
+.info-section .info-header h4 { font-size: 15px; font-weight: 700; color: var(--fg); }
+.info-section p { font-size: 13px; color: var(--fg2); line-height: 1.6; }
+.credits { text-align: center; padding: 16px; font-size: 12px; color: var(--fg3); }
+.credits strong { color: var(--fg2); }
+
+/* TAB BAR */
+.tab-bar {
+  height: var(--tab-height);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex; position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px; z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.tab-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; cursor: pointer; border: none; background: none; transition: all 0.2s;
+  padding: 8px 0;
+}
+.tab-item .material-icons-round { font-size: 24px; color: var(--fg3); transition: all 0.2s; }
+.tab-item span.label { font-size: 11px; color: var(--fg3); font-weight: 600; transition: all 0.2s; }
+.tab-item.active .material-icons-round { color: var(--primary); }
+.tab-item.active span.label { color: var(--primary); }
+.tab-item:active { opacity: 0.7; }
+
+/* PAGE HEADER */
+.page-header { padding: 48px 20px 20px; display: flex; align-items: center; gap: 12px; }
+.back-btn { background: none; border: none; cursor: pointer; color: var(--primary); display: flex; align-items: center; gap: 4px; font-size: 15px; font-weight: 700; font-family: 'Nunito', sans-serif; }
+.back-btn .material-icons-round { font-size: 18px; }
+.page-title { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 700; color: var(--fg); }
+.page-subtitle { font-size: 13px; color: var(--fg2); margin-top: 2px; }
+
+/* FORM */
+.form-section { padding: 0 16px 24px; }
+.form-card { background: var(--surface); border-radius: var(--radius); padding: 20px; box-shadow: 0 2px 12px var(--shadow); }
+.field-group { margin-bottom: 20px; }
+.field-label { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--fg2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.field-label .material-icons-round { font-size: 18px; color: var(--primary); }
+.text-input {
+  width: 100%; padding: 14px 16px; border: 2px solid var(--border);
+  border-radius: var(--radius-sm); font-size: 15px; font-family: 'Nunito', sans-serif;
+  background: var(--bg); color: var(--fg); outline: none; transition: all 0.2s;
+}
+.text-input:focus { border-color: var(--primary); background: var(--surface); }
+.text-input::placeholder { color: var(--fg3); }
+.option-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.option-btn {
+  flex: 1; min-width: 80px; padding: 12px 8px; border-radius: var(--radius-sm);
+  border: 2px solid var(--border); background: var(--surface2); cursor: pointer;
+  font-size: 14px; font-weight: 700; color: var(--fg2); font-family: 'Nunito', sans-serif;
+  text-align: center; transition: all 0.2s;
+}
+.option-btn.selected { border-color: var(--primary); background: rgba(13,126,164,0.08); color: var(--primary); }
+.option-btn:active { transform: scale(0.97); }
+.rule-badge {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px; border-radius: var(--radius-sm);
+  background: var(--bg); border: 1.5px solid var(--border);
+}
+.rule-badge .badge-label { font-size: 11px; font-weight: 700; color: var(--fg3); text-transform: uppercase; letter-spacing: 0.5px; }
+.rule-badge .badge-value { font-size: 14px; font-weight: 700; color: var(--fg); }
+.rule-badge .material-icons-round { font-size: 22px; color: var(--secondary); }
+.toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0; border-top: 1px solid var(--border);
+}
+.toggle-row .tl { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; color: var(--fg); }
+.toggle-row .tl .material-icons-round { font-size: 20px; color: var(--primary); }
+.toggle {
+  width: 50px; height: 28px; background: var(--border); border-radius: 14px;
+  cursor: pointer; position: relative; transition: all 0.3s; border: none;
+}
+.toggle.on { background: var(--primary); }
+.toggle::after {
+  content: ''; position: absolute; width: 22px; height: 22px;
+  background: white; border-radius: 50%; top: 3px; left: 3px;
+  transition: all 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.toggle.on::after { left: 25px; }
+.status-row { display: flex; gap: 8px; }
+.status-btn {
+  flex: 1; padding: 10px 6px; border-radius: var(--radius-sm);
+  border: 2px solid var(--border); background: var(--surface2); cursor: pointer;
+  font-size: 13px; font-weight: 700; color: var(--fg2); font-family: 'Nunito', sans-serif;
+  text-align: center; transition: all 0.2s;
+}
+.status-btn.active { border-color: var(--success); background: rgba(16,185,129,0.08); color: var(--success); }
+.status-btn.ferias { border-color: var(--warning); background: rgba(245,158,11,0.08); color: var(--warning); }
+.status-btn.inativo { border-color: var(--fg3); background: transparent; color: var(--fg3); }
+
+/* CALENDAR */
+.cal-container { background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.cal-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--primary); color: white; }
+.cal-header span { font-weight: 700; font-size: 15px; cursor: pointer; }
+.cal-nav { background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; border-radius: 6px; padding: 4px 8px; font-size: 18px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+.cal-day-label { text-align: center; padding: 8px 4px; font-size: 11px; font-weight: 700; color: var(--fg3); }
+.cal-day {
+  text-align: center; padding: 8px 4px; font-size: 14px; font-weight: 600; cursor: pointer;
+  color: var(--fg); transition: all 0.15s;
+}
+.cal-day:empty { cursor: default; }
+.cal-day.sunday { color: var(--primary); }
+.cal-day.selected { background: var(--primary); color: white; border-radius: 8px; }
+.cal-day.other-month { color: var(--fg3); }
+.cal-day:not(:empty):hover { background: var(--bg); border-radius: 8px; }
+.cal-day.selected:hover { background: var(--primary); }
+.selected-date-display { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.selected-date-display .material-icons-round { font-size: 18px; color: var(--primary); }
+.selected-date-display span { font-size: 14px; color: var(--fg2); }
+.next-folgas { margin-top: 12px; padding: 12px; background: var(--bg); border-radius: var(--radius-sm); }
+.next-folgas h5 { font-size: 12px; font-weight: 700; color: var(--fg3); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+.folga-item { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 13px; color: var(--fg2); }
+.folga-item .material-icons-round { font-size: 16px; color: var(--accent); }
+
+/* SAVE BUTTON */
+.save-btn {
+  width: 100%; padding: 16px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--secondary), #4F46E5); border: none;
+  color: white; font-size: 16px; font-weight: 800; font-family: 'Nunito', sans-serif;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 20px; transition: all 0.2s; box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+}
+.save-btn:active { transform: scale(0.98); }
+.save-btn .material-icons-round { font-size: 20px; }
+
+/* TEAM LIST */
+.team-list { padding: 0 16px 24px; }
+.search-box {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 2px solid var(--border);
+  border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px;
+}
+.search-box .material-icons-round { color: var(--fg3); font-size: 20px; }
+.search-box input { border: none; background: none; outline: none; font-size: 15px; color: var(--fg); flex: 1; font-family: 'Nunito', sans-serif; }
+.search-box input::placeholder { color: var(--fg3); }
+.filter-row { display: flex; gap: 8px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 4px; }
+.filter-row::-webkit-scrollbar { display: none; }
+.filter-chip {
+  padding: 8px 14px; border-radius: 20px; border: 2px solid var(--border);
+  background: var(--surface); font-size: 13px; font-weight: 700; color: var(--fg2);
+  cursor: pointer; white-space: nowrap; font-family: 'Nunito', sans-serif; transition: all 0.2s;
+}
+.filter-chip.active { border-color: var(--primary); background: rgba(13,126,164,0.08); color: var(--primary); }
+.colab-card {
+  background: var(--surface); border-radius: var(--radius); padding: 14px 16px;
+  margin-bottom: 10px; box-shadow: 0 2px 8px var(--shadow);
+  display: flex; align-items: center; gap: 12px; transition: all 0.2s;
+}
+.colab-card:active { transform: scale(0.99); }
+.colab-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800; color: white; flex-shrink: 0;
+}
+.colab-info { flex: 1; min-width: 0; }
+.colab-info .name { font-size: 15px; font-weight: 800; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.colab-info .meta { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+.badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 700;
+}
+.badge.abertura { background: rgba(13,126,164,0.1); color: var(--primary); }
+.badge.fechamento { background: rgba(99,102,241,0.1); color: var(--secondary); }
+.badge.masc { background: rgba(59,130,246,0.1); color: #3B82F6; }
+.badge.fem { background: rgba(236,72,153,0.1); color: var(--accent); }
+.badge.ativo { background: rgba(16,185,129,0.1); color: var(--success); }
+.badge.ferias { background: rgba(245,158,11,0.1); color: var(--warning); }
+.badge.inativo { background: rgba(148,163,184,0.1); color: var(--fg3); }
+.colab-actions { display: flex; gap: 6px; }
+.action-icon-btn {
+  width: 34px; height: 34px; border-radius: 10px; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.action-icon-btn:active { transform: scale(0.9); }
+.action-icon-btn.edit { background: rgba(99,102,241,0.1); color: var(--secondary); }
+.action-icon-btn.del { background: rgba(239,68,68,0.1); color: var(--error); }
+.action-icon-btn .material-icons-round { font-size: 18px; }
+.empty-state { text-align: center; padding: 40px 20px; }
+.empty-state .material-icons-round { font-size: 64px; color: var(--fg3); display: block; margin-bottom: 12px; }
+.empty-state p { color: var(--fg2); font-size: 14px; }
+
+/* GERAR ESCALA */
+.gerar-section { padding: 0 16px 24px; }
+.active-colab-card {
+  background: linear-gradient(135deg, #10B981, #059669);
+  border-radius: var(--radius); padding: 20px; margin-bottom: 20px;
+  color: white; display: flex; align-items: center; gap: 14px;
+}
+.active-colab-card .material-icons-round { font-size: 40px; opacity: 0.9; }
+.active-colab-card .number { font-size: 42px; font-weight: 900; }
+.active-colab-card .sub { font-size: 13px; opacity: 0.85; margin-top: 2px; }
+.month-selector { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 14px; }
+.month-selector::-webkit-scrollbar { display: none; }
+.month-btn {
+  padding: 10px 14px; border-radius: var(--radius-sm);
+  border: 2px solid var(--border); background: var(--surface); cursor: pointer;
+  font-size: 13px; font-weight: 700; color: var(--fg2); white-space: nowrap;
+  font-family: 'Nunito', sans-serif; transition: all 0.2s; flex-shrink: 0;
+}
+.month-btn.selected { border-color: var(--primary); background: rgba(13,126,164,0.08); color: var(--primary); }
+.year-selector { display: flex; gap: 8px; justify-content: center; margin-bottom: 14px; }
+.year-btn { padding: 10px 20px; border-radius: var(--radius-sm); border: 2px solid var(--border); background: var(--surface); cursor: pointer; font-size: 15px; font-weight: 800; color: var(--fg2); font-family: 'Nunito', sans-serif; transition: all 0.2s; }
+.year-btn.selected { border-color: var(--primary); background: rgba(13,126,164,0.08); color: var(--primary); }
+.escala-preview {
+  background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius);
+  padding: 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+}
+.escala-preview .material-icons-round { font-size: 28px; color: var(--primary); }
+.escala-preview .ep-label { font-size: 12px; color: var(--fg2); }
+.escala-preview .ep-value { font-size: 22px; font-weight: 900; color: var(--fg); }
+.escala-preview .ep-sub { font-size: 13px; color: var(--fg2); margin-top: 2px; }
+.gerar-btn {
+  width: 100%; padding: 16px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, #10B981, #059669); border: none;
+  color: white; font-size: 16px; font-weight: 800; font-family: 'Nunito', sans-serif;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all 0.2s; box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+}
+.gerar-btn:active { transform: scale(0.98); }
+.regras-card { background: var(--surface); border-radius: var(--radius); padding: 16px; margin-top: 20px; box-shadow: 0 2px 8px var(--shadow); }
+.regra-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.regra-item:last-child { border-bottom: none; padding-bottom: 0; }
+.regra-dot { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.regra-dot .material-icons-round { font-size: 14px; color: white; }
+.regra-text .rt { font-size: 14px; font-weight: 700; color: var(--fg); }
+.regra-text .rs { font-size: 12px; color: var(--fg2); }
+
+/* HISTORICO */
+.hist-list { padding: 0 16px 24px; }
+.hist-card {
+  border-radius: var(--radius); padding: 20px; margin-bottom: 12px;
+  cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+}
+.hist-card:active { transform: scale(0.99); }
+.hist-card .hc-label { font-size: 12px; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.hist-card .hc-title { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 700; color: white; margin: 4px 0; }
+.hist-card .hc-date { font-size: 12px; opacity: 0.75; margin-bottom: 12px; }
+.hist-card .hc-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.hist-tag { background: rgba(255,255,255,0.2); color: white; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+.hist-tag .material-icons-round { font-size: 14px; }
+.hist-card .hc-extra { font-size: 13px; opacity: 0.85; margin-top: 8px; }
+.hist-card .arrow-btn { position: absolute; top: 20px; right: 16px; width: 34px; height: 34px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.hist-card .arrow-btn .material-icons-round { font-size: 20px; color: white; }
+
+/* VISUALIZAR ESCALA */
+.vis-header {
+  background: linear-gradient(135deg, #0D7EA4, #065A7A);
+  padding: 48px 20px 24px; text-align: center; color: white;
+}
+.vis-header h2 { font-family: 'Poppins', sans-serif; font-size: 36px; font-weight: 700; }
+.vis-header .vis-year { font-size: 22px; opacity: 0.8; }
+.vis-header .vis-tags { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
+.vis-tag { background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+.vis-tag .material-icons-round { font-size: 16px; }
+.vis-actions { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.vis-action-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+.vis-action-btn {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: 12px 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 700; color: var(--fg2); font-family: 'Nunito', sans-serif;
+  transition: all 0.2s;
+}
+.vis-action-btn:active { transform: scale(0.95); background: var(--bg); }
+.vis-action-btn .material-icons-round { font-size: 22px; }
+.vis-action-btn.pdf .material-icons-round { color: #EF4444; }
+.vis-action-btn.png .material-icons-round { color: var(--success); }
+.vis-action-btn.whats .material-icons-round { color: #25D366; }
+.vis-action-btn.print .material-icons-round { color: var(--secondary); }
+.vis-full-btn {
+  width: 100%; padding: 14px; border-radius: var(--radius-sm); border: none;
+  color: white; font-size: 15px; font-weight: 700; font-family: 'Nunito', sans-serif;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all 0.2s;
+}
+.vis-full-btn:active { transform: scale(0.99); }
+.vis-full-btn.preview { background: linear-gradient(135deg, #0D7EA4, #065A7A); }
+.vis-full-btn.excel { background: linear-gradient(135deg, #10B981, #059669); }
+.vis-full-btn.next { background: linear-gradient(135deg, #6366F1, #4F46E5); }
+.vis-full-btn.report { background: transparent; border: 2px solid var(--border); color: var(--fg); }
+.vis-full-btn.delete { background: transparent; border: 2px solid var(--error); color: var(--error); }
+
+/* ESCALA TABLE */
+.escala-section { padding: 0 16px; }
+.escala-turno-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.turno-dot { width: 4px; height: 24px; border-radius: 2px; }
+.turno-dot.ab { background: var(--primary); }
+.turno-dot.fe { background: var(--accent); }
+.escala-turno-header h4 { font-family: 'Poppins', sans-serif; font-size: 17px; font-weight: 700; color: var(--fg); }
+.escala-turno-header .tc { font-size: 13px; color: var(--fg2); }
+.escala-table-wrap { overflow-x: auto; margin-bottom: 24px; border-radius: var(--radius-sm); box-shadow: 0 2px 12px var(--shadow); }
+.escala-table { border-collapse: collapse; width: 100%; min-width: 380px; background: var(--surface); }
+.escala-table th { background: #0D7EA4; color: white; padding: 10px 8px; font-size: 12px; font-weight: 700; text-align: center; }
+.escala-table th.name-col { text-align: left; padding-left: 12px; min-width: 110px; }
+.escala-table td { padding: 8px; text-align: center; border-bottom: 1px solid var(--border); font-size: 12px; }
+.escala-table td.name-col { text-align: left; padding-left: 12px; border-right: 1px solid var(--border); }
+.escala-table tr:last-child td { border-bottom: none; }
+.escala-table tr:hover td { background: var(--bg); }
+.td-name { font-size: 13px; font-weight: 700; color: var(--fg); }
+.td-cargo { font-size: 11px; color: var(--fg3); }
+.cell-work { background: #dcfce7; color: #15803d; padding: 4px 6px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
+.cell-folga { background: #fee2e2; color: #dc2626; padding: 4px 6px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: var(--surface2); padding: 12px; border-top: 1px solid var(--border); }
+.stat-mini { text-align: center; }
+.stat-mini .sm-val { font-size: 22px; font-weight: 900; color: var(--fg); }
+.stat-mini .sm-lab { font-size: 11px; color: var(--fg2); font-weight: 600; }
+.stat-mini.work .sm-val { color: var(--success); }
+.stat-mini.folg .sm-val { color: var(--error); }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200;
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-sheet {
+  background: var(--surface); border-radius: 24px 24px 0 0; width: 100%; max-width: 430px;
+  padding: 20px; max-height: 90vh; overflow-y: auto;
+  transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.modal-overlay.open .modal-sheet { transform: translateY(0); }
+.modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
+.modal-title { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 700; color: var(--fg); margin-bottom: 6px; }
+.modal-sub { font-size: 13px; color: var(--fg2); margin-bottom: 20px; }
+.share-link-box { background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 16px; }
+.share-link-box .link-label { font-size: 12px; font-weight: 700; color: var(--fg3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
+.share-link-box .link-value { font-size: 13px; color: var(--primary); word-break: break-all; }
+.link-edit-btn { background: var(--primary); color: white; border: none; border-radius: 6px; padding: 4px 10px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.share-opt-btn {
+  width: 100%; padding: 16px; border-radius: var(--radius-sm); border: none;
+  color: white; font-size: 15px; font-weight: 700; font-family: 'Nunito', sans-serif;
+  cursor: pointer; display: flex; align-items: center; gap: 12px;
+  margin-bottom: 10px; transition: all 0.2s;
+}
+.share-opt-btn:active { transform: scale(0.98); }
+.share-opt-btn.zerado { background: linear-gradient(135deg, #6366F1, #4F46E5); }
+.share-opt-btn.dados { background: linear-gradient(135deg, #10B981, #059669); }
+.share-opt-btn .sopt-icon { width: 38px; height: 38px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.share-opt-btn .sopt-icon .material-icons-round { font-size: 20px; }
+.share-opt-btn .sopt-text { text-align: left; }
+.share-opt-btn .sopt-title { display: block; font-size: 15px; font-weight: 800; }
+.share-opt-btn .sopt-sub { display: block; font-size: 12px; opacity: 0.8; }
+.copy-link-btn { width: 100%; padding: 14px; border-radius: var(--radius-sm); background: transparent; border: 2px solid var(--border); color: var(--fg2); font-size: 14px; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
+.close-btn { width: 100%; padding: 14px; border-radius: var(--radius-sm); background: var(--bg); border: none; color: var(--fg); font-size: 14px; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; margin-top: 10px; }
+
+/* PRINT PREVIEW */
+.print-table { border-collapse: collapse; width: 100%; }
+.print-table th { background: #0D7EA4; color: white; padding: 8px; font-size: 11px; }
+.print-table td { padding: 6px 8px; border: 1px solid #ddd; font-size: 11px; }
+.print-work { background: #dcfce7; color: #15803d; font-weight: 800; text-align: center; }
+.print-folga { background: #fee2e2; color: #dc2626; font-weight: 800; text-align: center; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--fg); color: var(--surface); padding: 12px 20px; border-radius: 10px;
+  font-size: 14px; font-weight: 700; z-index: 500; opacity: 0; transition: all 0.3s;
+  white-space: nowrap; max-width: 90%;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* CONFLICT ALERT */
+.conflict-alert {
+  background: rgba(245,158,11,0.1); border: 2px solid var(--warning);
+  border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 12px;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.conflict-alert .material-icons-round { color: var(--warning); font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.conflict-alert p { font-size: 13px; color: var(--fg); font-weight: 600; }
+
+/* REPORT */
+.report-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.report-item:last-child { border-bottom: none; }
+.report-item .ri-name { flex: 1; font-size: 14px; font-weight: 700; color: var(--fg); }
+.report-item .ri-stats { font-size: 13px; color: var(--fg2); }
+.progress-bar { height: 6px; background: var(--border); border-radius: 3px; margin-top: 6px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--success)); border-radius: 3px; }
+
+/* YR SELECTOR */
+.yr-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 4px; }
+.yr-btn { padding: 10px; border-radius: var(--radius-sm); border: 2px solid var(--border); background: var(--surface2); cursor: pointer; font-size: 14px; font-weight: 700; color: var(--fg2); font-family: 'Nunito', sans-serif; text-align: center; transition: all 0.2s; }
+.yr-btn.selected { border-color: var(--primary); background: rgba(13,126,164,0.08); color: var(--primary); }
+
+@media print {
+  body { background: white; }
+  .tab-bar { display: none; }
+}
+
+/* Animations */
+.fade-in { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.section-header-row { padding: 16px 16px 8px; display: flex; align-items: center; gap: 10px; }
+.section-header-row .material-icons-round { font-size: 22px; color: var(--accent); }
+.section-header-row h3 { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 700; color: var(--fg); }
+.no-escala { text-align: center; padding: 40px 20px; color: var(--fg2); }
+.no-escala .material-icons-round { font-size: 60px; color: var(--fg3); display: block; margin-bottom: 12px; }
+
+/* Link indicator */
+.link-indicator { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; margin-top: 4px; }
+.link-indicator.ok { color: var(--success); }
+.link-indicator.warn { color: var(--warning); }
+</style>
+<link rel="manifest" href="blob:null/7d91a9b5-4e68-4dab-976b-07f5915b975d"></head>
+<body>
+<div class="app" id="app">
+  <div class="screen" id="screen"><div class="fade-in">
+    <div class="grad-header">
+      <div class="grad-header-top">
+        <div>
+          <span style="font-size:30px">🥬</span>
+          <h1>Escala Domingo FLV</h1>
+          <p>Gerencie escalas de domingos automaticamente</p>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn" onclick="toggleDark()" title="Alternar tema">
+            <span class="material-icons-round">🌙</span>
+          </button>
+          <button class="icon-btn" onclick="openShareModal()" title="Compartilhar">
+            <span class="material-icons-round">↗</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="stat-row">
+      <div class="stat-card">
+        <div>
+          <div class="label">Colaboradores</div>
+          <div class="number">13</div>
+        </div>
+        <div class="stat-icon blue"><span class="material-icons-round">👤</span></div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="label">Escalas</div>
+          <div class="number" style="color:var(--accent)">0</div>
+        </div>
+        <div class="stat-icon pink"><span class="material-icons-round">📅</span></div>
+      </div>
+    </div>
+    <div class="action-cards">
+      <div class="action-card card-purple" onclick="navigate(&#39;cadastro&#39;)">
+        <div>
+          <h3>Cadastrar Colaborador</h3>
+          <p>Adicione e gerencie sua equipe</p>
+        </div>
+        <div class="action-card-icon"><span class="material-icons-round">➕</span></div>
+      </div>
+      <div class="action-card card-green" onclick="navigate(&#39;gerar&#39;)">
+        <div>
+          <h3>Gerar Escala</h3>
+          <p>Crie a escala mensal automaticamente</p>
+        </div>
+        <div class="action-card-icon"><span class="material-icons-round">📅</span></div>
+      </div>
+      <div class="action-card card-pink" onclick="navigate(&#39;escalas&#39;)">
+        <div>
+          <h3>Histórico de Escalas</h3>
+          <p>Visualize escalas anteriores</p>
+        </div>
+        <div class="action-card-icon"><span class="material-icons-round">☰</span></div>
+      </div>
+    </div>
+    <div class="info-section">
+      <div class="info-header">
+        <span class="material-icons-round">🕐</span>
+        <h4>Como funciona</h4>
+      </div>
+      <p>Cadastre seus colaboradores com a última folga de domingo. O sistema gera automaticamente escalas mensais aplicando as regras <strong>3x1 (homens)</strong> e <strong>1x1 (mulheres)</strong>.</p>
+    </div>
+    <div style="padding:0 16px 8px">
+      <button onclick="showInstallGuide()" style="width:100%;padding:14px;border-radius:12px;background:linear-gradient(135deg,#6366F1,#4F46E5);border:none;color:white;font-size:15px;font-weight:800;font-family:Nunito,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 15px rgba(99,102,241,0.3)">
+        <span class="material-icons-round">📲</span>Instalar App na Tela Inicial
+      </button>
+    </div>
+    <div class="credits">Desenvolvido por <strong>William Jesus da Silva</strong><br>Escala Domingo FLV v5.0</div>
+  </div></div>
+  <nav class="tab-bar">
+    <button class="tab-item active" id="tab-home" onclick="navigate(&#39;home&#39;)">
+      <span class="material-icons-round">🏠</span>
+      <span class="label">Home</span>
+    </button>
+    <button class="tab-item" id="tab-escalas" onclick="navigate(&#39;escalas&#39;)">
+      <span class="material-icons-round">📅</span>
+      <span class="label">Escalas</span>
+    </button>
+    <button class="tab-item" id="tab-equipe" onclick="navigate(&#39;equipe&#39;)">
+      <span class="material-icons-round">👥</span>
+      <span class="label">Equipe</span>
+    </button>
+  </nav>
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-sheet" id="modal-sheet"><!-- modal content --></div>
+  </div>
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+// ===================== STATE =====================
+let state = {
+  darkMode: false,
+  currentPage: 'home',
+  colaboradores: [],
+  escalas: [],
+  editingColab: null,
+  viewingEscala: null,
+  calendarDate: new Date(),
+  selectedDate: null,
+  filterTurno: 'Todos',
+  searchQuery: '',
+  gerarMes: new Date().getMonth() + 1,
+  gerarAno: new Date().getFullYear(),
+  appLink: window.location.href.split('?')[0],
+};
+
+// ===================== STORAGE =====================
+const STORE_KEY = 'escala_domingo_flv_v1';
+function saveState() {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify({
+      colaboradores: state.colaboradores,
+      escalas: state.escalas,
+      darkMode: state.darkMode,
+      appLink: state.appLink,
+    }));
+    return true;
+  } catch(e) {
+    showToast('⚠️ Erro ao salvar! Memória cheia ou bloqueada.');
+    return false;
+  }
+}
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+    if (d.colaboradores) state.colaboradores = d.colaboradores;
+    if (d.escalas) state.escalas = d.escalas;
+    if (d.darkMode !== undefined) state.darkMode = d.darkMode;
+    if (d.appLink) state.appLink = d.appLink;
+  } catch(e) {}
+}
+
+// ===================== NAVIGATION =====================
+const TAB_PAGES = ['home', 'escalas', 'equipe'];
+function navigate(page, extra) {
+  state.currentPage = page;
+  if (extra) state[extra.key] = extra.val;
+  // Update tab active state
+  TAB_PAGES.forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.classList.toggle('active', t === page || (page === 'visualizar' && t === 'escalas') || (page === 'gerar' && t === 'escalas') || (page === 'cadastro' && t === 'equipe'));
+  });
+  render();
+}
+
+// ===================== RENDER =====================
+function render() {
+  const screen = document.getElementById('screen');
+  document.getElementById('app').classList.toggle('dark', state.darkMode);
+  switch(state.currentPage) {
+    case 'home': screen.innerHTML = renderHome(); break;
+    case 'equipe': screen.innerHTML = renderEquipe(); break;
+    case 'escalas': screen.innerHTML = renderEscalas(); break;
+    case 'cadastro': screen.innerHTML = renderCadastro(); break;
+    case 'gerar': screen.innerHTML = renderGerar(); break;
+    case 'visualizar': screen.innerHTML = renderVisualizar(); break;
+    default: screen.innerHTML = renderHome();
+  }
+  screen.scrollTop = 0;
+  attachHandlers();
+}
+
+// ===================== HELPERS =====================
+const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const MESES_SHORT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+function formatDate(d) {
+  if (!d) return '';
+  const dt = typeof d === 'string' ? new Date(d + (d.includes('T') ? '' : 'T12:00:00')) : d;
+  return dt.toLocaleDateString('pt-BR');
+}
+function getDomingos(mes, ano) {
+  const domingos = [];
+  const d = new Date(ano, mes - 1, 1);
+  while (d.getMonth() === mes - 1) {
+    if (d.getDay() === 0) domingos.push(new Date(d));
+    d.setDate(d.getDate() + 1);
+  }
+  return domingos;
+}
+function parseDate(str) {
+  // dd/mm/yyyy
+  if (!str) return null;
+  const [dd, mm, yyyy] = str.split('/');
+  if (!dd || !mm || !yyyy) return null;
+  return new Date(parseInt(yyyy), parseInt(mm) - 1, parseInt(dd), 12, 0, 0);
+}
+function toDateStr(d) {
+  if (!d) return null;
+  const dt = d instanceof Date ? d : new Date(d);
+  const dd = String(dt.getDate()).padStart(2, '0');
+  const mm = String(dt.getMonth() + 1).padStart(2, '0');
+  return `${dd}/${mm}/${dt.getFullYear()}`;
+}
+function avatarColor(i) {
+  const colors = ['#6366F1','#EC4899','#0D7EA4','#10B981','#F59E0B','#EF4444','#8B5CF6','#06B6D4'];
+  return colors[i % colors.length];
+}
+function initials(name) {
+  return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+}
+function uuid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ===================== ESCALA LOGIC =====================
+function calcStatus(colab, domingo) {
+  if (colab.regraEncarregado === 'Folgar todos os domingos') return 'FOLGA';
+  if (!colab.trabalhaDomingos) return null;
+  const lastFolga = parseDate(colab.ultimaFolgaDomingo);
+  if (!lastFolga) return 'TRABALHA'; // sem histórico, começa trabalhando
+  const msPerDay = 86400000;
+  const diffDays = Math.round((domingo - lastFolga) / msPerDay);
+  const diffWeeks = Math.round(diffDays / 7);
+  // regra 1x1 (mulheres)
+  if (colab.sexo === 'Feminino' && colab.cargo !== 'Encarregado') {
+    return diffWeeks % 2 === 0 ? 'FOLGA' : 'TRABALHA';
+  }
+  // regra 3x1 (homens e encarregados 3x1)
+  const pos = diffWeeks % 4;
+  return pos === 0 ? 'FOLGA' : 'TRABALHA';
+}
+function gerarEscala(mes, ano) {
+  const domingos = getDomingos(mes, ano);
+  const ativos = state.colaboradores.filter(c => c.status === 'Ativo' && c.trabalhaDomingos);
+  const dias = domingos.map((dom, i) => {
+    const trabalham = [], folgam = [];
+    ativos.forEach(c => {
+      const s = calcStatus(c, dom);
+      if (s === 'FOLGA') folgam.push(c.id);
+      else trabalham.push(c.id);
+    });
+    return { data: dom.toISOString(), domingo: i + 1, colaboradoresTrabalham: trabalham, colaboradoresFolgam: folgam };
+  });
+  // Update ultima folga de domingo
+  ativos.forEach(c => {
+    let lastFolga = null;
+    dias.forEach(d => {
+      if (d.colaboradoresFolgam.includes(c.id)) {
+        const dt = new Date(d.data);
+        if (!lastFolga || dt > lastFolga) lastFolga = dt;
+      }
+    });
+    if (lastFolga) {
+      const idx = state.colaboradores.findIndex(x => x.id === c.id);
+      if (idx >= 0) state.colaboradores[idx].ultimaFolgaDomingo = toDateStr(lastFolga);
+    }
+  });
+  const escala = {
+    id: uuid(),
+    mes, ano,
+    dataCriacao: new Date().toISOString(),
+    dias,
+    colaboradores: JSON.parse(JSON.stringify(ativos)),
+  };
+  // Remove existing same mes/ano
+  state.escalas = state.escalas.filter(e => !(e.mes === mes && e.ano === ano));
+  state.escalas.unshift(escala);
+  saveState();
+  return escala;
+}
+function getNextFolgas(colab, count = 6) {
+  const folgas = [];
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  // Find next Sundays
+  const d = new Date(today);
+  while (d.getDay() !== 0) d.setDate(d.getDate() + 1);
+  let found = 0;
+  for (let i = 0; found < count && i < 52; i++) {
+    const status = calcStatus(colab, d);
+    if (status === 'FOLGA') { folgas.push(new Date(d)); found++; }
+    d.setDate(d.getDate() + 7);
+  }
+  return folgas;
+}
+
+// ===================== HOME =====================
+function renderHome() {
+  const ativos = state.colaboradores.filter(c => c.status === 'Ativo').length;
+  const link = state.appLink || '';
+  const linkOk = link && link.startsWith('http');
+  return `<div class="fade-in">
+    <div class="grad-header">
+      <div class="grad-header-top">
+        <div>
+          <span style="font-size:30px">🥬</span>
+          <h1>Escala Domingo FLV</h1>
+          <p>Gerencie escalas de domingos automaticamente</p>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn" onclick="toggleDark()" title="Alternar tema">
+            <span class="material-icons-round">${state.darkMode ? '☀️' : '🌙'}</span>
+          </button>
+          <button class="icon-btn" onclick="openShareModal()" title="Compartilhar">
+            <span class="material-icons-round">↗</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    ${state._isGuest ? `
+    <div style="margin:12px 16px 0;background:linear-gradient(135deg,#F59E0B,#D97706);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px">
+      <span class="material-icons-round">🚫</span>
+      <div style="flex:1">
+        <div style="color:white;font-weight:800;font-size:14px">Modo Novo Usuário</div>
+        <div style="color:rgba(255,255,255,0.85);font-size:12px">Seus dados são independentes. Cadastre sua equipe aqui!</div>
+      </div>
+    </div>` : ''}
+    <div class="stat-row">
+      <div class="stat-card">
+        <div>
+          <div class="label">Colaboradores</div>
+          <div class="number">${state.colaboradores.length}</div>
+        </div>
+        <div class="stat-icon blue"><span class="material-icons-round">👤</span></div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="label">Escalas</div>
+          <div class="number" style="color:var(--accent)">${state.escalas.length}</div>
+        </div>
+        <div class="stat-icon pink"><span class="material-icons-round">📅</span></div>
+      </div>
+    </div>
+    <div class="action-cards">
+      <div class="action-card card-purple" onclick="navigate('cadastro')">
+        <div>
+          <h3>Cadastrar Colaborador</h3>
+          <p>Adicione e gerencie sua equipe</p>
+        </div>
+        <div class="action-card-icon"><span class="material-icons-round">➕</span></div>
+      </div>
+      <div class="action-card card-green" onclick="navigate('gerar')">
+        <div>
+          <h3>Gerar Escala</h3>
+          <p>Crie a escala mensal automaticamente</p>
+        </div>
+        <div class="action-card-icon"><span class="material-icons-round">📅</span></div>
+      </div>
+      <div class="action-card card-pink" onclick="navigate('escalas')">
+        <div>
+          <h3>Histórico de Escalas</h3>
+          <p>Visualize escalas anteriores</p>
+        </div>
+        <div class="action-card-icon"><span class="material-icons-round">☰</span></div>
+      </div>
+    </div>
+    <div class="info-section">
+      <div class="info-header">
+        <span class="material-icons-round">🕐</span>
+        <h4>Como funciona</h4>
+      </div>
+      <p>Cadastre seus colaboradores com a última folga de domingo. O sistema gera automaticamente escalas mensais aplicando as regras <strong>3x1 (homens)</strong> e <strong>1x1 (mulheres)</strong>.</p>
+    </div>
+    <div style="padding:0 16px 8px">
+      <button onclick="showInstallGuide()" style="width:100%;padding:14px;border-radius:12px;background:linear-gradient(135deg,#6366F1,#4F46E5);border:none;color:white;font-size:15px;font-weight:800;font-family:Nunito,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 15px rgba(99,102,241,0.3)">
+        <span class="material-icons-round">📲</span>Instalar App na Tela Inicial
+      </button>
+    </div>
+    <div class="credits">Desenvolvido por <strong>William Jesus da Silva</strong><br>Escala Domingo FLV v5.0</div>
+  </div>`;
+}
+
+// ===================== TOGGLE DARK =====================
+function toggleDark() {
+  state.darkMode = !state.darkMode;
+  saveState();
+  render();
+}
+
+// ===================== SHARE MODAL =====================
+function openShareModal() {
+  const link = state.appLink || '';
+  const baseLink = link.replace(/\?.*$/, '');
+  const cleanLink = baseLink ? baseLink + '?novo=true' : '';
+  const linkOk = baseLink && baseLink.startsWith('http');
+  document.getElementById('modal-sheet').innerHTML = `
+    <div class="modal-handle"></div>
+    <div class="modal-title">Compartilhar App</div>
+    <div class="modal-sub">Escolha como deseja compartilhar o Escala Domingo FLV</div>
+    <div class="share-link-box">
+      <div class="link-label">
+        Link do App
+        <button class="link-edit-btn" onclick="editLink()">Editar</button>
+      </div>
+      <div class="link-value" id="link-display">${baseLink || 'Nenhum link configurado'}</div>
+      <div class="link-indicator ${linkOk ? 'ok' : 'warn'}">
+        <span class="material-icons-round" style="font-size:14px">${linkOk ? '✅' : '⚠️'}</span>
+        ${linkOk ? 'Link configurado ✓' : 'Configure o link do app para compartilhar'}
+      </div>
+    </div>
+    <div style="background:rgba(16,185,129,0.08);border:2px solid var(--success);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:var(--fg)">
+      <strong style="color:var(--success)">🔒 Seus dados ficam seguros!</strong><br>
+      Quem receber o link <strong>?novo=true</strong> terá um app 100% limpo e independente — sem acesso aos seus cadastros.
+    </div>
+    <button class="share-opt-btn zerado" onclick="shareZerado()">
+      <div class="sopt-icon"><span class="material-icons-round">🔗</span></div>
+      <div class="sopt-text">
+        <span class="sopt-title">Link Zerado (Recomendado)</span>
+        <span class="sopt-sub">App vazio para a pessoa cadastrar a equipe dela</span>
+      </div>
+    </button>
+    <button class="share-opt-btn dados" onclick="shareDados()">
+      <div class="sopt-icon"><span class="material-icons-round">⧉</span></div>
+      <div class="sopt-text">
+        <span class="sopt-title">Link com Dados</span>
+        <span class="sopt-sub">Para o encarregado do outro turno usar a mesma escala</span>
+      </div>
+    </button>
+    <button class="copy-link-btn" onclick="copyCleanLink()">
+      <span class="material-icons-round">⧉</span> Copiar Link Zerado
+    </button>
+    <button class="copy-link-btn" style="margin-top:8px" onclick="copyLink()">
+      <span class="material-icons-round">🔗</span> Copiar Link Normal
+    </button>
+    <button class="close-btn" onclick="closeModal()">Fechar</button>`;
+  openModal();
+}
+function editLink() {
+  const newLink = prompt('Cole o link do aplicativo publicado:', state.appLink || '');
+  if (newLink !== null) {
+    state.appLink = newLink.trim();
+    saveState();
+    openShareModal();
+  }
+}
+function shareZerado() {
+  const base = (state.appLink || window.location.href.split('?')[0]).replace(/\?.*$/, '');
+  const link = base + '?novo=true';
+  const msg = `🥬 *Escala Domingo FLV*\n\nAcesse o app para gerenciar escalas de domingos:\n${link}\n\n✨ Comece cadastrando sua equipe!`;
+  copyText(msg);
+  openWhatsApp(msg);
+}
+function shareDados() {
+  const ativos = state.colaboradores.filter(c => c.status === 'Ativo');
+  const ab = ativos.filter(c => c.turno === 'Abertura').length;
+  const fe = ativos.filter(c => c.turno === 'Fechamento').length;
+  const link = state.appLink || window.location.href;
+  const msg = `🥬 *Escala Domingo FLV*\n\nLink do app com dados cadastrados:\n${link}\n\n👥 Equipe: ${ativos.length} colaboradores\n🌅 Abertura: ${ab} | 🌆 Fechamento: ${fe}\n📅 Escalas geradas: ${state.escalas.length}`;
+  copyText(msg);
+  openWhatsApp(msg);
+}
+function copyCleanLink() {
+  const base = (state.appLink || window.location.href.split('?')[0]).replace(/\?.*$/, '');
+  copyText(base + '?novo=true');
+  showToast('✓ Link zerado copiado!');
+}
+function copyLink() {
+  const base = (state.appLink || window.location.href.split('?')[0]).replace(/\?.*$/, '');
+  copyText(base);
+  showToast('✓ Link copiado!');
+}
+function copyText(text) {
+  if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
+  else { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); }
+}
+function openWhatsApp(msg) {
+  const encoded = encodeURIComponent(msg);
+  window.open(`https://wa.me/?text=${encoded}`, '_blank');
+}
+function openModal() { document.getElementById('modal-overlay').classList.add('open'); }
+function closeModal(e) { 
+  if (!e || e.target === document.getElementById('modal-overlay')) { 
+    document.getElementById('modal-overlay').classList.remove('open'); 
+  } 
+}
+
+// ===================== EQUIPE =====================
+function renderEquipe() {
+  const q = state.searchQuery.toLowerCase();
+  let list = state.colaboradores.filter(c => c.nome.toLowerCase().includes(q));
+  if (state.filterTurno !== 'Todos') list = list.filter(c => c.turno === state.filterTurno);
+  return `<div class="fade-in">
+    <div style="padding:48px 16px 12px">
+      <h2 class="page-title">Equipe</h2>
+      <p class="page-subtitle">${state.colaboradores.length} colaborador(es) cadastrado(s)</p>
+    </div>
+    <div style="padding:0 16px 12px">
+      <div class="search-box">
+        <span class="material-icons-round">🔍</span>
+        <input type="text" placeholder="Buscar por nome..." value="${state.searchQuery}" oninput="state.searchQuery=this.value;renderInPlace('equipe')" id="search-input">
+      </div>
+      <div class="filter-row">
+        ${['Todos','Abertura','Fechamento'].map(f => `<button class="filter-chip ${state.filterTurno===f?'active':''}" onclick="state.filterTurno='${f}';renderInPlace('equipe')">${f}</button>`).join('')}
+      </div>
+    </div>
+    <div class="team-list">
+      ${list.length === 0 ? `<div class="empty-state"><span class="material-icons-round">🚫</span><p>Nenhum colaborador encontrado</p><br><button class="save-btn" style="max-width:220px;margin:0 auto" onclick="navigate('cadastro')"><span class="material-icons-round">➕</span>Adicionar</button></div>` :
+        list.map((c, i) => `
+        <div class="colab-card">
+          <div class="colab-avatar" style="background:${avatarColor(state.colaboradores.indexOf(c))}">${initials(c.nome)}</div>
+          <div class="colab-info">
+            <div class="name">${c.nome}</div>
+            <div class="meta">
+              <span class="badge ${c.turno==='Abertura'?'abertura':'fechamento'}">${c.turno}</span>
+              <span class="badge ${c.sexo==='Masculino'?'masc':'fem'}">${c.sexo==='Masculino'?'♂':'♀'} ${c.sexo}</span>
+              <span class="badge ${c.status.toLowerCase()}">${c.status}</span>
+              ${c.cargo==='Encarregado'?'<span class="badge" style="background:rgba(245,158,11,0.1);color:var(--warning)">👑 Enc.</span>':''}
+            </div>
+          </div>
+          <div class="colab-actions">
+            <button class="action-icon-btn edit" onclick="editColab('${c.id}')"><span class="material-icons-round">✏️</span></button>
+            <button class="action-icon-btn del" onclick="deleteColab('${c.id}')"><span class="material-icons-round">🗑️</span></button>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div style="padding:0 16px 24px">
+      <button class="save-btn" onclick="navigate('cadastro')"><span class="material-icons-round">➕</span>Cadastrar Colaborador</button>
+    </div>
+  </div>`;
+}
+function renderInPlace(page) {
+  const screen = document.getElementById('screen');
+  if (page === 'equipe') screen.innerHTML = renderEquipe();
+  else if (page === 'escalas') screen.innerHTML = renderEscalas();
+  else if (page === 'gerar') screen.innerHTML = renderGerar();
+  else if (page === 'cadastro') screen.innerHTML = renderCadastro();
+  attachHandlers();
+}
+
+// ===================== CADASTRO =====================
+function renderCadastro() {
+  const c = state.editingColab || { nome:'', cargo:'Colaborador', turno:'Abertura', sexo:'Masculino', status:'Ativo', trabalhaDomingos:true, regraEncarregado:'3x1', ultimaFolgaDomingo:'' };
+  const regra = c.cargo === 'Encarregado' && c.regraEncarregado === 'Folgar todos os domingos' ? 'Folga todos os domingos' : c.sexo === 'Feminino' ? 'Regra 1x1 (trabalha 1, folga 1)' : 'Regra 3x1 (trabalha 3, folga 1)';
+  const regraColor = c.sexo === 'Feminino' || (c.cargo === 'Encarregado' && c.regraEncarregado === 'Folgar todos os domingos') ? 'var(--accent)' : 'var(--secondary)';
+  const nextFolgas = c.ultimaFolgaDomingo ? getNextFolgas(c) : [];
+  return `<div class="fade-in">
+    <div class="page-header">
+      <button class="back-btn" onclick="state.editingColab=null;state._newColabId=null;navigate('equipe')"><span class="material-icons-round">›</span> Voltar</button>
+    </div>
+    <div style="padding:0 16px 12px">
+      <h2 class="page-title">${state.editingColab ? 'Editar' : 'Cadastrar'} Colaborador</h2>
+      <p class="page-subtitle">Adicione um novo membro à sua equipe</p>
+    </div>
+    <div class="form-section">
+      <div class="form-card">
+        <div class="field-group">
+          <div class="field-label"><span class="material-icons-round">👤</span>Nome Completo *</div>
+          <input class="text-input" id="f-nome" type="text" placeholder="Digite o nome" value="${c.nome}" oninput="updateForm()">
+        </div>
+        <div class="field-group">
+          <div class="field-label"><span class="material-icons-round">🛡️</span>Cargo *</div>
+          <div class="option-row" id="cargo-opts">
+            ${['Colaborador','Encarregado'].map(v => `<button class="option-btn ${c.cargo===v?'selected':''}" onclick="selectOpt('cargo','${v}')">${v}</button>`).join('')}
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-label"><span class="material-icons-round">🕐</span>Turno Principal *</div>
+          <div class="option-row" id="turno-opts">
+            ${['Abertura','Fechamento'].map(v => `<button class="option-btn ${c.turno===v?'selected':''}" onclick="selectOpt('turno','${v}')">${v}</button>`).join('')}
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-label"><span class="material-icons-round">👤</span>Sexo *</div>
+          <div class="option-row" id="sexo-opts">
+            ${['Masculino','Feminino'].map(v => `<button class="option-btn ${c.sexo===v?'selected':''}" onclick="selectOpt('sexo','${v}')">${v}</button>`).join('')}
+          </div>
+        </div>
+        ${c.cargo === 'Encarregado' ? `
+        <div class="field-group">
+          <div class="field-label"><span class="material-icons-round">📏</span>Regra Encarregado</div>
+          <div class="option-row" id="regra-opts">
+            ${['3x1','Folgar todos os domingos'].map(v => `<button class="option-btn ${c.regraEncarregado===v?'selected':''}" onclick="selectOpt('regraEncarregado','${v}')">${v}</button>`).join('')}
+          </div>
+        </div>` : ''}
+        <div class="rule-badge" style="margin-bottom:16px">
+          <span class="material-icons-round">↺</span>
+          <div><div class="badge-label">Regra Aplicada</div><div class="badge-value" style="color:${regraColor}">${regra}</div></div>
+        </div>
+        <div class="field-group">
+          <div class="field-label"><span class="material-icons-round">✅</span>Status *</div>
+          <div class="status-row">
+            <button class="status-btn ${c.status==='Ativo'?'active':''}" onclick="selectOpt('status','Ativo')">Ativo</button>
+            <button class="status-btn ${c.status==='Férias'?'ferias':''}" onclick="selectOpt('status','Férias')">Férias</button>
+            <button class="status-btn ${c.status==='Inativo'?'inativo':''}" onclick="selectOpt('status','Inativo')">Inativo</button>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <div class="tl"><span class="material-icons-round">📅</span>Trabalha aos Domingos?</div>
+          <button class="toggle ${c.trabalhaDomingos?'on':''}" id="tog-dom" onclick="toggleTD()"></button>
+        </div>
+        <div class="field-group" style="margin-top:16px">
+          <div class="field-label"><span class="material-icons-round">📆</span>Última Folga de Domingo</div>
+          ${renderCalendar(c.ultimaFolgaDomingo)}
+          ${nextFolgas.length > 0 ? `
+          <div class="next-folgas">
+            <h5>Próximas ${nextFolgas.length} folgas previstas</h5>
+            ${nextFolgas.map(d => `<div class="folga-item"><span class="material-icons-round">✅</span>${toDateStr(d)}</div>`).join('')}
+          </div>` : ''}
+        </div>
+        <button class="save-btn" onclick="saveColab()">
+          <span class="material-icons-round">💾</span>
+          ${state.editingColab ? 'Atualizar' : 'Salvar'} Colaborador
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderCalendar(selectedStr) {
+  const sel = parseDate(selectedStr);
+  const d = state.calendarDate;
+  const year = d.getFullYear(), month = d.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const days = ['D','S','T','Q','Q','S','S'];
+  let cells = '';
+  for (let i = 0; i < firstDay; i++) cells += '<div class="cal-day"></div>';
+  for (let i = 1; i <= daysInMonth; i++) {
+    const dt = new Date(year, month, i);
+    const isSun = dt.getDay() === 0;
+    const isSel = sel && dt.getDate() === sel.getDate() && dt.getMonth() === sel.getMonth() && dt.getFullYear() === sel.getFullYear();
+    cells += `<div class="cal-day ${isSun?'sunday':''} ${isSel?'selected':''}" onclick="${isSun?`selectCalDay(${i},${month},${year})`:'wrongDay()'}">${i}</div>`;
+  }
+  return `<div class="cal-container">
+    <div class="cal-header">
+      <button class="cal-nav" onclick="calNav(-1)">‹</button>
+      <span onclick="openYearSelector()">${MESES[month]} ${year}</span>
+      <button class="cal-nav" onclick="calNav(1)">›</button>
+    </div>
+    <div class="cal-grid">
+      ${days.map(d => `<div class="cal-day-label">${d}</div>`).join('')}
+      ${cells}
+    </div>
+    ${sel ? `<div class="selected-date-display"><span class="material-icons-round">📆</span><span>Selecionado: <strong>${toDateStr(sel)}</strong></span></div>` : ''}
+  </div>`;
+}
+
+function selectCalDay(day, month, year) {
+  const dt = new Date(year, month, day);
+  if (dt.getDay() !== 0) { showToast('⚠️ Selecione apenas domingos!'); return; }
+  const nome = document.getElementById('f-nome');
+  const colab = getFormColab();
+  if (nome) colab.nome = nome.value;
+  colab.ultimaFolgaDomingo = toDateStr(dt);
+  state.editingColab = colab;
+  state.calendarDate = new Date(year, month, 1);
+  renderCadastroInPlace();
+}
+function wrongDay() { showToast('⚠️ Apenas domingos são válidos!'); }
+function calNav(dir) {
+  const nome = document.getElementById('f-nome');
+  const c = getFormColab();
+  if (nome) c.nome = nome.value;
+  state.editingColab = c;
+  state.calendarDate = new Date(state.calendarDate.getFullYear(), state.calendarDate.getMonth() + dir, 1);
+  renderCadastroInPlace();
+}
+function renderCadastroInPlace() {
+  document.getElementById('screen').innerHTML = renderCadastro();
+  attachHandlers();
+}
+function openYearSelector() {
+  // Save nome before opening modal so it's not lost
+  const nome = document.getElementById('f-nome');
+  const c = getFormColab();
+  if (nome) c.nome = nome.value;
+  state.editingColab = c;
+  const cy = state.calendarDate.getFullYear();
+  const years = [];
+  for (let y = cy - 5; y <= cy + 5; y++) years.push(y);
+  document.getElementById('modal-sheet').innerHTML = `
+    <div class="modal-handle"></div>
+    <div class="modal-title">Selecionar Ano</div>
+    <div class="yr-grid">${years.map(y => `<button class="yr-btn ${y===cy?'selected':''}" onclick="selectYear(${y})">${y}</button>`).join('')}</div>
+    <button class="close-btn" onclick="closeModal()">Cancelar</button>`;
+  openModal();
+}
+function selectYear(y) {
+  const nome = document.getElementById('f-nome');
+  const c = getFormColab();
+  if (nome) c.nome = nome.value;
+  state.editingColab = c;
+  state.calendarDate = new Date(y, state.calendarDate.getMonth(), 1);
+  closeModal();
+  renderCadastroInPlace();
+}
+
+function getFormColab() {
+  if (!state.editingColab && !state._newColabId) state._newColabId = uuid();
+  const defaults = { id: state._newColabId || uuid(), nome:'', cargo:'Colaborador', turno:'Abertura', sexo:'Masculino', status:'Ativo', trabalhaDomingos:true, regraEncarregado:'3x1', ultimaFolgaDomingo:'' };
+  const c = state.editingColab ? {...state.editingColab} : {...defaults};
+  const nome = document.getElementById('f-nome');
+  if (nome) c.nome = nome.value;
+  return c;
+}
+function selectOpt(field, val) {
+  const nome = document.getElementById('f-nome');
+  const c = getFormColab();
+  if (nome) c.nome = nome.value;
+  c[field] = val;
+  state.editingColab = c;
+  renderCadastroInPlace();
+}
+function toggleTD() {
+  const nome = document.getElementById('f-nome');
+  const c = getFormColab();
+  if (nome) c.nome = nome.value;
+  c.trabalhaDomingos = !c.trabalhaDomingos;
+  state.editingColab = c;
+  renderCadastroInPlace();
+}
+function updateForm() {
+  // Persist nome to state so it's never lost on re-render
+  const nome = document.getElementById('f-nome');
+  if (!nome) return;
+  if (!state.editingColab && !state._newColabId) state._newColabId = uuid();
+  if (!state.editingColab) {
+    state.editingColab = { id: state._newColabId, nome: nome.value, cargo:'Colaborador', turno:'Abertura', sexo:'Masculino', status:'Ativo', trabalhaDomingos:true, regraEncarregado:'3x1', ultimaFolgaDomingo:'' };
+  } else {
+    state.editingColab.nome = nome.value;
+  }
+}
+function saveColab() {
+  const c = getFormColab();
+  if (!c.nome || !c.nome.trim()) { showToast('⚠️ Informe o nome!'); return; }
+  c.nome = c.nome.trim();
+  // Ensure ID is stable - use _newColabId if set, otherwise keep c.id
+  if (!c.id) c.id = state._newColabId || uuid();
+  const idx = state.colaboradores.findIndex(x => x.id === c.id);
+  if (idx >= 0) state.colaboradores[idx] = c;
+  else state.colaboradores.push(c);
+  saveState();
+  showToast(idx >= 0 ? '✓ Colaborador atualizado!' : '✓ Colaborador salvo!');
+  state.editingColab = null;
+  state._newColabId = null;
+  navigate('equipe');
+}
+function editColab(id) {
+  state.editingColab = JSON.parse(JSON.stringify(state.colaboradores.find(c => c.id === id)));
+  state.calendarDate = state.editingColab.ultimaFolgaDomingo ? parseDate(state.editingColab.ultimaFolgaDomingo) : new Date();
+  navigate('cadastro');
+}
+function deleteColab(id) {
+  if (confirm('Excluir este colaborador?')) {
+    state.colaboradores = state.colaboradores.filter(c => c.id !== id);
+    saveState();
+    showToast('Colaborador removido');
+    renderInPlace('equipe');
+  }
+}
+
+// ===================== GERAR =====================
+function renderGerar() {
+  const ativos = state.colaboradores.filter(c => c.status === 'Ativo' && c.trabalhaDomingos).length;
+  const mes = state.gerarMes, ano = state.gerarAno;
+  const anos = [ano - 1, ano, ano + 1];
+  return `<div class="fade-in">
+    <div class="page-header">
+      <button class="back-btn" onclick="navigate('home')"><span class="material-icons-round">›</span> Voltar</button>
+    </div>
+    <div style="padding:0 16px 12px">
+      <h2 class="page-title">Gerar Escala</h2>
+      <p class="page-subtitle">Crie a escala mensal automaticamente</p>
+    </div>
+    <div class="gerar-section">
+      <div class="active-colab-card">
+        <span class="material-icons-round">👤</span>
+        <div>
+          <div class="number">${ativos}</div>
+          <div class="sub">Colaboradores Ativos</div>
+          <div style="font-size:12px;opacity:0.8;margin-top:4px">Apenas ativos que trabalham aos domingos serão incluídos</div>
+        </div>
+      </div>
+      <div class="form-card">
+        <div class="field-label" style="margin-bottom:12px"><span class="material-icons-round">📅</span>Mês *</div>
+        <div class="month-selector">
+          ${MESES_SHORT.map((m, i) => `<button class="month-btn ${mes===i+1?'selected':''}" onclick="state.gerarMes=${i+1};renderInPlace('gerar')">${m}</button>`).join('')}
+        </div>
+        <div class="field-label" style="margin:12px 0"><span class="material-icons-round">📅</span>Ano *</div>
+        <div class="year-selector">
+          ${anos.map(y => `<button class="year-btn ${ano===y?'selected':''}" onclick="state.gerarAno=${y};renderInPlace('gerar')">${y}</button>`).join('')}
+        </div>
+        <div class="escala-preview">
+          <span class="material-icons-round">📅</span>
+          <div>
+            <div class="ep-label">Escala a ser gerada:</div>
+            <div class="ep-value">${MESES[mes-1]} / ${ano}</div>
+            <div class="ep-sub">${ativos} colaborador(es)</div>
+          </div>
+        </div>
+        <button class="gerar-btn" onclick="doGerarEscala()">
+          <span class="material-icons-round">✅</span>
+          Gerar Escala Mensal
+        </button>
+      </div>
+      <div class="regras-card">
+        <div class="field-label" style="margin-bottom:12px"><span class="material-icons-round">ℹ️</span>Regras Aplicadas</div>
+        <div class="regra-item">
+          <div class="regra-dot" style="background:var(--secondary)"><span class="material-icons-round">✓</span></div>
+          <div class="regra-text"><div class="rt">Homens: Regra 3x1</div><div class="rs">Trabalha 3 domingos, folga 1</div></div>
+        </div>
+        <div class="regra-item">
+          <div class="regra-dot" style="background:var(--accent)"><span class="material-icons-round">✓</span></div>
+          <div class="regra-text"><div class="rt">Mulheres: Regra 1x1</div><div class="rs">Trabalha 1 domingo, folga 1</div></div>
+        </div>
+        <div class="regra-item">
+          <div class="regra-dot" style="background:var(--warning)"><span class="material-icons-round">✓</span></div>
+          <div class="regra-text"><div class="rt">Encarregados</div><div class="rs">Seguem regra configurada no cadastro</div></div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function doGerarEscala() {
+  const ativos = state.colaboradores.filter(c => c.status === 'Ativo' && c.trabalhaDomingos).length;
+  if (ativos === 0) { showToast('⚠️ Nenhum colaborador ativo!'); return; }
+  const escala = gerarEscala(state.gerarMes, state.gerarAno);
+  showToast('✓ Escala gerada com sucesso!');
+  state.viewingEscala = escala.id;
+  navigate('visualizar');
+}
+
+// ===================== ESCALAS (HISTORICO) =====================
+function renderEscalas() {
+  const colors = ['#6366F1','#10B981','#EC4899','#0D7EA4','#F59E0B'];
+  return `<div class="fade-in">
+    <div style="padding:48px 16px 4px; display:flex; align-items:center; gap:10px">
+      <span class="material-icons-round" style="font-size:28px;color:var(--accent)">≡</span>
+      <div>
+        <h2 class="page-title">Histórico</h2>
+        <p class="page-subtitle">${state.escalas.length} escala(s) gerada(s)</p>
+      </div>
+    </div>
+    <div class="hist-list">
+      ${state.escalas.length === 0 ? `<div class="no-escala"><span class="material-icons-round">📵</span><p>Nenhuma escala gerada ainda.<br>Gere sua primeira escala!</p><br><button class="gerar-btn" style="max-width:220px;margin:0 auto" onclick="navigate('gerar')"><span class="material-icons-round">＋</span>Gerar Escala</button></div>` :
+        state.escalas.map((e, i) => {
+          const ab = e.dias[0]?.colaboradoresTrabalham.concat(e.dias[0]?.colaboradoresFolgam).length || 0;
+          const colAb = e.colaboradores.filter(c => c.turno === 'Abertura').length;
+          const colFe = e.colaboradores.filter(c => c.turno === 'Fechamento').length;
+          return `<div class="hist-card" style="background:linear-gradient(135deg,${colors[i%colors.length]},${colors[(i+2)%colors.length]})" onclick="navigate('visualizar',{key:'viewingEscala',val:'${e.id}'})">
+            <div class="hc-label">Escala Mensal</div>
+            <div class="hc-title">${MESES[e.mes-1]} / ${e.ano}</div>
+            <div class="hc-date">Gerada em ${new Date(e.dataCriacao).toLocaleDateString('pt-BR')}, ${new Date(e.dataCriacao).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</div>
+            <div class="hc-tags">
+              <div class="hist-tag"><span class="material-icons-round">👤</span>${e.colaboradores.length} total</div>
+              <div class="hist-tag"><span class="material-icons-round">📅</span>${e.dias.length} dom.</div>
+            </div>
+            <div class="hc-extra">Abertura: ${colAb} &nbsp; Fechamento: ${colFe}</div>
+            <div class="arrow-btn"><span class="material-icons-round">→</span></div>
+          </div>`;
+        }).join('')}
+    </div>
+  </div>`;
+}
+
+// ===================== VISUALIZAR =====================
+function renderVisualizar() {
+  const e = state.escalas.find(x => x.id === state.viewingEscala);
+  if (!e) return `<div class="fade-in"><div class="page-header"><button class="back-btn" onclick="navigate('escalas')"><span class="material-icons-round">›</span>Voltar</button></div><div class="empty-state"><span class="material-icons-round">✖</span><p>Escala não encontrada</p></div></div>`;
+  const turnos = ['Abertura', 'Fechamento'];
+  // Find month/year for next month
+  let nm = e.mes + 1, ny = e.ano;
+  if (nm > 12) { nm = 1; ny++; }
+  return `<div class="fade-in">
+    <div class="page-header" style="padding-bottom:0">
+      <button class="back-btn" onclick="navigate('escalas')"><span class="material-icons-round">›</span>Voltar</button>
+    </div>
+    <div class="vis-header">
+      <h2>${MESES[e.mes-1]}</h2>
+      <div class="vis-year">${e.ano}</div>
+      <div class="vis-tags">
+        <div class="vis-tag"><span class="material-icons-round">👤</span>${e.colaboradores.length} colaboradores</div>
+        <div class="vis-tag"><span class="material-icons-round">📅</span>${e.dias.length} domingos</div>
+      </div>
+    </div>
+    <div class="vis-actions">
+      <button class="vis-full-btn preview" onclick="showPrintPreview('${e.id}')">
+        <span class="material-icons-round">👁</span>Pré-visualizar Impressão A4
+      </button>
+      <div class="vis-action-row">
+        <button class="vis-action-btn pdf" onclick="exportPDF('${e.id}')">
+          <span class="material-icons-round">📄</span>PDF
+        </button>
+        <button class="vis-action-btn png" onclick="exportPNG('${e.id}')">
+          <span class="material-icons-round">🖼️</span>PNG
+        </button>
+        <button class="vis-action-btn whats" onclick="shareWhatsApp('${e.id}')">
+          <span class="material-icons-round">📤</span>WhatsApp
+        </button>
+        <button class="vis-action-btn print" onclick="printEscala('${e.id}')">
+          <span class="material-icons-round">🖨️</span>Imprimir
+        </button>
+      </div>
+      <button class="vis-full-btn excel" onclick="exportExcel('${e.id}')">
+        <span class="material-icons-round">📋</span>Exportar Excel (.xlsx)
+      </button>
+      <button class="vis-full-btn next" onclick="gerarProximo('${e.id}')">
+        <span class="material-icons-round">↺</span>Gerar Escala de ${MESES_SHORT[nm-1]}/${ny}
+      </button>
+      <button class="vis-full-btn report" onclick="showReport('${e.id}')">
+        <span class="material-icons-round">📊</span>Ver Relatório de Presença
+      </button>
+      <button class="vis-full-btn delete" onclick="deleteEscala('${e.id}')">
+        <span class="material-icons-round">🗑️</span>Apagar Escala
+      </button>
+    </div>
+    <div class="escala-section">
+      ${turnos.map(turno => {
+        const colsT = e.colaboradores.filter(c => c.turno === turno);
+        if (colsT.length === 0) return '';
+        // Check conflicts
+        const conflicts = e.dias.filter(d => {
+          const trabT = d.colaboradoresTrabalham.filter(id => colsT.some(c => c.id === id));
+          return trabT.length < 2;
+        });
+        return `
+        <div class="escala-turno-header">
+          <div class="turno-dot ${turno==='Abertura'?'ab':'fe'}"></div>
+          <div>
+            <h4>Turno de ${turno}</h4>
+            <span class="tc">${colsT.length} colaborador(es)</span>
+          </div>
+        </div>
+        ${conflicts.length > 0 ? `<div class="conflict-alert"><span class="material-icons-round">⚠️</span><p>⚠️ Atenção: ${conflicts.length} domingo(s) com menos de 2 colaboradores no turno ${turno}!</p></div>` : ''}
+        <div class="escala-table-wrap">
+          <table class="escala-table">
+            <thead><tr>
+              <th class="name-col">Nome</th>
+              ${e.dias.map((d, i) => `<th>Dom ${i+1}<br><small>${new Date(d.data).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</small></th>`).join('')}
+            </tr></thead>
+            <tbody>
+              ${colsT.map(c => `<tr>
+                <td class="name-col"><div class="td-name">${c.nome.split(' ')[0]}</div><div class="td-cargo">${c.cargo}</div></td>
+                ${e.dias.map(d => {
+                  const trab = d.colaboradoresTrabalham.includes(c.id);
+                  return `<td><span class="${trab?'cell-work':'cell-folga'}">${trab?'TRABALHA':'FOLGA'}</span></td>`;
+                }).join('')}
+              </tr>`).join('')}
+            </tbody>
+          </table>
+          <div class="stats-row">
+            <div class="stat-mini"><div class="sm-val">${colsT.length}</div><div class="sm-lab">Colaboradores</div></div>
+            <div class="stat-mini work"><div class="sm-val">${e.dias.reduce((s,d)=>s+d.colaboradoresTrabalham.filter(id=>colsT.some(c=>c.id===id)).length,0)}</div><div class="sm-lab">Trabalham</div></div>
+            <div class="stat-mini folg"><div class="sm-val">${e.dias.reduce((s,d)=>s+d.colaboradoresFolgam.filter(id=>colsT.some(c=>c.id===id)).length,0)}</div><div class="sm-lab">Folgam</div></div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+function showPrintPreview(id) {
+  const html = buildPrintHTML(id);
+  const w = window.open('', '_blank');
+  if (w) { w.document.write(html); w.document.close(); }
+}
+function printEscala(id) {
+  const html = buildPrintHTML(id);
+  const w = window.open('', '_blank');
+  if (w) { w.document.write(html); w.document.close(); setTimeout(() => w.print(), 500); }
+}
+function exportPDF(id) { printEscala(id); showToast('📄 Abrindo PDF para salvar...'); }
+function exportPNG(id) { showToast('🖼️ Captura de tela disponível via Print'); showPrintPreview(id); }
+function shareWhatsApp(id) {
+  const e = state.escalas.find(x => x.id === id);
+  if (!e) return;
+  let msg = `📅 *Escala ${MESES[e.mes-1]}/${e.ano}*\n\n`;
+  ['Abertura','Fechamento'].forEach(t => {
+    const cols = e.colaboradores.filter(c => c.turno === t);
+    if (!cols.length) return;
+    msg += `*Turno ${t}:*\n`;
+    cols.forEach(c => {
+      const folgas = e.dias.filter(d => d.colaboradoresFolgam.includes(c.id)).map((d,i) => `Dom ${d.domingo}`);
+      msg += `• ${c.nome} - Folga: ${folgas.length ? folgas.join(', ') : 'nenhuma'}\n`;
+    });
+    msg += '\n';
+  });
+  copyText(msg);
+  openWhatsApp(msg);
+}
+function exportExcel(id) {
+  const e = state.escalas.find(x => x.id === id);
+  if (!e) return;
+  // Generate CSV as fallback
+  let csv = `Escala ${MESES[e.mes-1]}/${e.ano}\n`;
+  csv += `Nome,Turno,Cargo,${e.dias.map((_,i)=>`Dom ${i+1}`).join(',')}\n`;
+  e.colaboradores.forEach(c => {
+    const row = [c.nome, c.turno, c.cargo, ...e.dias.map(d => d.colaboradoresTrabalham.includes(c.id) ? 'TRABALHA' : 'FOLGA')];
+    csv += row.join(',') + '\n';
+  });
+  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `escala_${MESES[e.mes-1]}_${e.ano}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('✓ Arquivo CSV exportado!');
+}
+function gerarProximo(id) {
+  const e = state.escalas.find(x => x.id === id);
+  if (!e) return;
+  let nm = e.mes + 1, ny = e.ano;
+  if (nm > 12) { nm = 1; ny++; }
+  state.gerarMes = nm; state.gerarAno = ny;
+  navigate('gerar');
+}
+function deleteEscala(id) {
+  if (confirm('Apagar esta escala?')) {
+    state.escalas = state.escalas.filter(x => x.id !== id);
+    saveState();
+    showToast('Escala apagada');
+    navigate('escalas');
+  }
+}
+function showReport(id) {
+  const e = state.escalas.find(x => x.id === id);
+  if (!e) return;
+  const items = e.colaboradores.map(c => {
+    const trab = e.dias.filter(d => d.colaboradoresTrabalham.includes(c.id)).length;
+    const folg = e.dias.filter(d => d.colaboradoresFolgam.includes(c.id)).length;
+    const pct = e.dias.length ? Math.round(trab / e.dias.length * 100) : 0;
+    return { ...c, trab, folg, pct };
+  });
+  document.getElementById('modal-sheet').innerHTML = `
+    <div class="modal-handle"></div>
+    <div class="modal-title">Relatório de Presença</div>
+    <div class="modal-sub">${MESES[e.mes-1]} / ${e.ano} · ${e.colaboradores.length} colaboradores</div>
+    <div>
+      ${items.map(c => `<div class="report-item">
+        <div class="colab-avatar" style="background:${avatarColor(e.colaboradores.indexOf(c))};width:36px;height:36px;font-size:14px">${initials(c.nome)}</div>
+        <div style="flex:1">
+          <div class="ri-name">${c.nome}</div>
+          <div class="ri-stats">Trabalhou: <strong style="color:var(--success)">${c.trab}x</strong> · Folgou: <strong style="color:var(--error)">${c.folg}x</strong> · ${c.pct}%</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${c.pct}%"></div></div>
+        </div>
+      </div>`).join('')}
+    </div>
+    <button class="close-btn" onclick="closeModal()">Fechar</button>`;
+  openModal();
+}
+
+function buildPrintHTML(id) {
+  const e = state.escalas.find(x => x.id === id);
+  if (!e) return '';
+  const count = e.colaboradores.length;
+  const fs = count <= 12 ? 17 : count <= 18 ? 15 : count <= 25 ? 13 : 11;
+  const fnm = count <= 12 ? 16 : count <= 18 ? 14 : count <= 25 ? 13 : 11;
+  const ftt = count <= 12 ? 32 : count <= 18 ? 28 : count <= 25 ? 24 : 22;
+  const turnos = ['Abertura', 'Fechamento'];
+  let tables = '';
+  turnos.forEach(t => {
+    const cols = e.colaboradores.filter(c => c.turno === t);
+    if (!cols.length) return;
+    tables += `<h3 style="font-size:${fnm+2}px;font-weight:800;margin:12px 0 6px;color:#065A7A;text-transform:uppercase;letter-spacing:1px;border-left:4px solid #0D7EA4;padding-left:8px">Turno de ${t}</h3>
+    <table style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:${fs}px">
+      <thead><tr style="background:#0D7EA4;color:white">
+        <th style="padding:8px 10px;text-align:left;min-width:120px">Nome</th>
+        ${e.dias.map((d,i) => `<th style="padding:8px;text-align:center">Dom ${i+1}<br><small style="font-size:${fs-3}px">${new Date(d.data).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</small></th>`).join('')}
+      </tr></thead>
+      <tbody>
+        ${cols.map((c,ri) => `<tr style="background:${ri%2===0?'#fff':'#f8fafc'}">
+          <td style="padding:8px 10px;font-weight:700;font-size:${fnm}px;border-right:1px solid #e2e8f0">${c.nome}<br><small style="font-size:${fnm-3}px;color:#666">${c.cargo}</small></td>
+          ${e.dias.map(d => {
+            const trab = d.colaboradoresTrabalham.includes(c.id);
+            return `<td style="text-align:center;padding:6px 4px;background:${trab?'#dcfce7':'#fee2e2'};color:${trab?'#15803d':'#dc2626'};font-weight:800;font-size:${fs-2}px">${trab?'TRABALHA':'FOLGA'}</td>`;
+          }).join('')}
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+  });
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <style>
+    @page { size: A4; margin: 8mm; }
+    body { font-family: Arial, sans-serif; margin: 0; background: white; }
+    @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+  </style></head><body>
+  <div style="background:linear-gradient(135deg,#0D7EA4,#065A7A);color:white;padding:16px;text-align:center;border-radius:8px;margin-bottom:16px">
+    <h1 style="font-size:${ftt}px;margin:0;font-weight:900">ESCALA DOMINGO FLV</h1>
+    <h2 style="font-size:${ftt-8}px;margin:6px 0 0;font-weight:500">${MESES[e.mes-1]} / ${e.ano}</h2>
+    <small style="opacity:0.8">${e.colaboradores.length} colaborador(es) · ${e.dias.length} domingo(s)</small>
+  </div>
+  ${tables}
+  <div style="display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#666;border-top:1px solid #e2e8f0;padding-top:6px">
+    <span>Legenda: <span style="background:#dcfce7;color:#15803d;padding:2px 6px;border-radius:4px;font-weight:800">TRABALHA</span> <span style="background:#fee2e2;color:#dc2626;padding:2px 6px;border-radius:4px;font-weight:800">FOLGA</span></span>
+    <span>Gerado em ${new Date(e.dataCriacao).toLocaleDateString('pt-BR')}, ${new Date(e.dataCriacao).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</span>
+  </div>
+  </body></html>`;
+}
+
+// ===================== ATTACH HANDLERS =====================
+function attachHandlers() {
+  const si = document.getElementById('search-input');
+  if (si) si.focus && false; // don't auto-focus
+}
+
+// ===================== INIT =====================
+// Check URL parameter: ?novo=true opens app in clean mode (guest mode)
+const urlParams = new URLSearchParams(window.location.search);
+const isGuestMode = urlParams.get('novo') === 'true';
+
+if (isGuestMode) {
+  // Guest mode: use a SEPARATE storage key so original data is untouched
+  state._storeKey = 'escala_domingo_flv_guest_v1';
+  // Override save/load to use guest key
+  const origLoad = loadState;
+  loadState = function() {
+    try {
+      const d = JSON.parse(localStorage.getItem(state._storeKey) || '{}');
+      if (d.colaboradores) state.colaboradores = d.colaboradores;
+      if (d.escalas) state.escalas = d.escalas;
+      if (d.darkMode !== undefined) state.darkMode = d.darkMode;
+      if (d.appLink) state.appLink = d.appLink;
+    } catch(e) {}
+  };
+  saveState = function() {
+    try {
+      localStorage.setItem(state._storeKey, JSON.stringify({
+        colaboradores: state.colaboradores,
+        escalas: state.escalas,
+        darkMode: state.darkMode,
+        appLink: state.appLink,
+      }));
+      return true;
+    } catch(e) {
+      showToast('⚠️ Erro ao salvar! Memória cheia ou bloqueada.');
+      return false;
+    }
+  };
+  state._isGuest = true;
+  loadState();
+} else {
+  loadState();
+  // Add sample data only for first-time non-guest users
+  if (state.colaboradores.length === 0) {
+    const sampleData = [
+      {id:'c1',nome:'Thiago Santos',cargo:'Colaborador',turno:'Abertura',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'18/01/2026'},
+      {id:'c2',nome:'Rafael Oliveira',cargo:'Colaborador',turno:'Abertura',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'11/01/2026'},
+      {id:'c3',nome:'Fernando Costa',cargo:'Colaborador',turno:'Abertura',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'04/01/2026'},
+      {id:'c4',nome:'Jonathan Lima',cargo:'Colaborador',turno:'Abertura',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'25/01/2026'},
+      {id:'c5',nome:'Jeferson Alves',cargo:'Colaborador',turno:'Abertura',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'18/01/2026'},
+      {id:'c6',nome:'Carlos Mendes',cargo:'Colaborador',turno:'Abertura',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'25/01/2026'},
+      {id:'c7',nome:'Nilde Ferreira',cargo:'Colaborador',turno:'Fechamento',sexo:'Feminino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'25/01/2026'},
+      {id:'c8',nome:'Laércio Souza',cargo:'Encarregado',turno:'Fechamento',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,regraEncarregado:'3x1',ultimaFolgaDomingo:'04/01/2026'},
+      {id:'c9',nome:'Alexandre Pinto',cargo:'Colaborador',turno:'Fechamento',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'25/01/2026'},
+      {id:'c10',nome:'Bruno Carvalho',cargo:'Colaborador',turno:'Fechamento',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'11/01/2026'},
+      {id:'c11',nome:'João Vitor',cargo:'Colaborador',turno:'Fechamento',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'18/01/2026'},
+      {id:'c12',nome:'Mateus Rodrigues',cargo:'Colaborador',turno:'Fechamento',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'18/01/2026'},
+      {id:'c13',nome:'Eduardo Silva',cargo:'Colaborador',turno:'Fechamento',sexo:'Masculino',status:'Ativo',trabalhaDomingos:true,ultimaFolgaDomingo:'11/01/2026'},
+    ];
+    state.colaboradores = sampleData;
+    saveState();
+  }
+}
+render();
+
+// ===================== SERVICE WORKER (PWA OFFLINE) =====================
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE = 'escala-flv-v1';
+    self.addEventListener('install', e => { self.skipWaiting(); });
+    self.addEventListener('activate', e => { self.clients.claim(); });
+    self.addEventListener('fetch', e => {
+      if (e.request.method !== 'GET') return;
+      e.respondWith(
+        caches.open(CACHE).then(cache =>
+          fetch(e.request).then(res => { cache.put(e.request, res.clone()); return res; })
+          .catch(() => caches.match(e.request))
+        )
+      );
+    });
+  `;
+  try {
+    const swBlob = new Blob([swCode], {type:'application/javascript'});
+    const swUrl = URL.createObjectURL(swBlob);
+    navigator.serviceWorker.register(swUrl).catch(()=>{});
+  } catch(e) {}
+}
+
+// ===================== PWA INSTALL PROMPT =====================
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  setTimeout(() => { if (deferredPrompt) showInstallBanner(); }, 2500);
+});
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  const b = document.getElementById('install-banner');
+  if (b) b.remove();
+  showToast('✓ App instalado! Procure o ícone na tela inicial 🥬');
+});
+function showInstallBanner() {
+  if (document.getElementById('install-banner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'install-banner';
+  banner.style.cssText = 'position:fixed;bottom:72px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:398px;background:linear-gradient(135deg,#6366F1,#4F46E5);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;z-index:300;box-shadow:0 8px 30px rgba(99,102,241,0.4)';
+  banner.innerHTML = `
+    <span style="font-size:26px">📲</span>
+    <div style="flex:1">
+      <div style="color:white;font-weight:800;font-size:14px">Instalar na tela inicial</div>
+      <div style="color:rgba(255,255,255,0.8);font-size:12px">Acesse sempre sem abrir o navegador</div>
+    </div>
+    <button onclick="installPWA()" style="background:white;color:#6366F1;border:none;border-radius:8px;padding:8px 12px;font-weight:800;font-size:13px;cursor:pointer;font-family:Nunito,sans-serif;white-space:nowrap">Instalar</button>
+    <button onclick="document.getElementById('install-banner').remove()" style="background:rgba(255,255,255,0.15);color:white;border:none;border-radius:8px;padding:8px;cursor:pointer;font-size:16px;line-height:1;flex-shrink:0">✕</button>`;
+  document.body.appendChild(banner);
+}
+async function installPWA() {
+  if (!deferredPrompt) {
+    showToast('Veja o guia de instalação abaixo ↓');
+    showInstallGuide();
+    return;
+  }
+  deferredPrompt.prompt();
+  const result = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  const b = document.getElementById('install-banner');
+  if (b) b.remove();
+}
+function showInstallGuide() {
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const steps = isIOS
+    ? ['Toque no botão <strong>Compartilhar</strong> (ícone de seta para cima) na barra do Safari','Role para baixo e toque em <strong>"Adicionar à Tela de Início"</strong>','Toque em <strong>Adicionar</strong> no canto superior direito','O ícone 🥬 vai aparecer na sua tela inicial!']
+    : ['No Chrome, toque nos <strong>3 pontinhos ⋮</strong> no canto superior direito','Toque em <strong>"Adicionar à tela inicial"</strong>','Confirme tocando em <strong>Adicionar</strong>','O ícone 🥬 vai aparecer na sua tela inicial!'];
+  document.getElementById('modal-sheet').innerHTML = `
+    <div class="modal-handle"></div>
+    <div class="modal-title">📲 Instalar o App</div>
+    <div class="modal-sub">Siga os passos abaixo no seu celular</div>
+    <div style="background:var(--bg);border-radius:12px;padding:16px;margin-bottom:16px">
+      ${steps.map((s,i) => `<div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:${i<steps.length-1?'16px':'0'}">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--primary);color:white;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0">${i+1}</div>
+        <div style="font-size:14px;color:var(--fg);line-height:1.5;padding-top:4px">${s}</div>
+      </div>`).join('')}
+    </div>
+    <div style="background:rgba(16,185,129,0.1);border:2px solid var(--success);border-radius:10px;padding:12px 14px;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start">
+      <span class="material-icons-round">ℹ️</span>
+      <div style="font-size:13px;color:var(--fg)">Após instalar, o app abre <strong>sem navegador</strong>, funciona <strong>offline</strong> e nunca mais dá o erro de arquivo!</div>
+    </div>
+    <button class="close-btn" onclick="closeModal()">Entendi!</button>`;
+  openModal();
+}
+</script>
+
+
+</body></html>
