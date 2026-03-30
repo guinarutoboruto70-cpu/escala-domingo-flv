@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///C:/Users/willi/Downloads/escala-domingo-flv-fix3_3.html -->
+<!-- saved from url=(0050)file:///C:/Users/willi/Downloads/escala-debug.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -581,7 +581,7 @@ body {
 .link-indicator.ok { color: var(--success); }
 .link-indicator.warn { color: var(--warning); }
 </style>
-<link rel="manifest" href="blob:null/fa14a09c-a7f8-4e78-910d-2f7539b97f0c"></head>
+<link rel="manifest" href="blob:null/ddf99cd7-0c20-4f8f-859a-400cbdcf7f5d"></head>
 <body>
 <div class="app" id="app">
   <div class="screen" id="screen"><div class="fade-in">
@@ -673,7 +673,7 @@ body {
   <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
     <div class="modal-sheet" id="modal-sheet"><!-- modal content --></div>
   </div>
-  <div class="toast" id="toast"></div>
+  <div class="toast" id="toast">📂 Carregado: 13 colaborador(es)</div>
 </div>
 
 <script>
@@ -698,26 +698,36 @@ let state = {
 const STORE_KEY = 'escala_domingo_flv_v1';
 function saveState() {
   try {
-    localStorage.setItem(STORE_KEY, JSON.stringify({
+    const data = JSON.stringify({
       colaboradores: state.colaboradores,
       escalas: state.escalas,
       darkMode: state.darkMode,
       appLink: state.appLink,
-    }));
+    });
+    localStorage.setItem(STORE_KEY, data);
+    // Debug: show save confirmation with count
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+    const count = saved.colaboradores ? saved.colaboradores.length : 0;
+    showToast(`✓ Salvo! ${count} colaborador(es) no storage`);
     return true;
   } catch(e) {
-    showToast('⚠️ Erro ao salvar! Memória cheia ou bloqueada.');
+    showToast('⚠️ Erro ao salvar: ' + e.message);
     return false;
   }
 }
 function loadState() {
   try {
-    const d = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) { showToast('⚠️ Storage vazio ao carregar'); return; }
+    const d = JSON.parse(raw);
     if (d.colaboradores) state.colaboradores = d.colaboradores;
     if (d.escalas) state.escalas = d.escalas;
     if (d.darkMode !== undefined) state.darkMode = d.darkMode;
     if (d.appLink) state.appLink = d.appLink;
-  } catch(e) {}
+    showToast(`📂 Carregado: ${state.colaboradores.length} colaborador(es)`);
+  } catch(e) {
+    showToast('⚠️ Erro ao carregar: ' + e.message);
+  }
 }
 
 // ===================== NAVIGATION =====================
