@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0060)file:///C:/Users/willi/Downloads/escala-domingo-flv-fix.html -->
+<!-- saved from url=(0061)file:///C:/Users/willi/Downloads/escala-domingo-flv-fix3.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -581,7 +581,7 @@ body {
 .link-indicator.ok { color: var(--success); }
 .link-indicator.warn { color: var(--warning); }
 </style>
-<link rel="manifest" href="blob:null/7d91a9b5-4e68-4dab-976b-07f5915b975d"></head>
+<link rel="manifest" href="blob:null/ad771927-270a-4789-9440-98dd7fec6244"></head>
 <body>
 <div class="app" id="app">
   <div class="screen" id="screen"><div class="fade-in">
@@ -1628,26 +1628,28 @@ function buildPrintHTML(id) {
   const e = state.escalas.find(x => x.id === id);
   if (!e) return '';
   const count = e.colaboradores.length;
-  const fs = count <= 12 ? 17 : count <= 18 ? 15 : count <= 25 ? 13 : 11;
-  const fnm = count <= 12 ? 16 : count <= 18 ? 14 : count <= 25 ? 13 : 11;
-  const ftt = count <= 12 ? 32 : count <= 18 ? 28 : count <= 25 ? 24 : 22;
+  // Landscape A4 (297x210mm) fits many more rows
+  const fs  = count <= 15 ? 11 : count <= 22 ? 10 : count <= 30 ? 9 : 8;
+  const fnm = count <= 15 ? 11 : count <= 22 ? 10 : count <= 30 ? 9 : 8;
+  const ftt = count <= 15 ? 22 : count <= 22 ? 20 : 18;
+  const pad = count <= 15 ? '5px 8px' : count <= 22 ? '4px 6px' : '3px 4px';
   const turnos = ['Abertura', 'Fechamento'];
   let tables = '';
   turnos.forEach(t => {
     const cols = e.colaboradores.filter(c => c.turno === t);
     if (!cols.length) return;
-    tables += `<h3 style="font-size:${fnm+2}px;font-weight:800;margin:12px 0 6px;color:#065A7A;text-transform:uppercase;letter-spacing:1px;border-left:4px solid #0D7EA4;padding-left:8px">Turno de ${t}</h3>
-    <table style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:${fs}px">
+    tables += `<h3 style="font-size:${fnm+1}px;font-weight:800;margin:8px 0 4px;color:#065A7A;text-transform:uppercase;letter-spacing:1px;border-left:4px solid #0D7EA4;padding-left:8px">Turno de ${t}</h3>
+    <table style="border-collapse:collapse;width:100%;margin-bottom:8px;font-size:${fs}px">
       <thead><tr style="background:#0D7EA4;color:white">
-        <th style="padding:8px 10px;text-align:left;min-width:120px">Nome</th>
-        ${e.dias.map((d,i) => `<th style="padding:8px;text-align:center">Dom ${i+1}<br><small style="font-size:${fs-3}px">${new Date(d.data).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</small></th>`).join('')}
+        <th style="padding:${pad};text-align:left;min-width:100px">Nome</th>
+        ${e.dias.map((d,i) => `<th style="padding:${pad};text-align:center;white-space:nowrap">Dom ${i+1}<br><span style="font-size:${fs-2}px">${new Date(d.data).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</span></th>`).join('')}
       </tr></thead>
       <tbody>
         ${cols.map((c,ri) => `<tr style="background:${ri%2===0?'#fff':'#f8fafc'}">
-          <td style="padding:8px 10px;font-weight:700;font-size:${fnm}px;border-right:1px solid #e2e8f0">${c.nome}<br><small style="font-size:${fnm-3}px;color:#666">${c.cargo}</small></td>
+          <td style="padding:${pad};font-weight:700;font-size:${fnm}px;border-right:1px solid #e2e8f0">${c.nome}<br><span style="font-size:${fnm-2}px;color:#666;font-weight:400">${c.cargo}</span></td>
           ${e.dias.map(d => {
             const trab = d.colaboradoresTrabalham.includes(c.id);
-            return `<td style="text-align:center;padding:6px 4px;background:${trab?'#dcfce7':'#fee2e2'};color:${trab?'#15803d':'#dc2626'};font-weight:800;font-size:${fs-2}px">${trab?'TRABALHA':'FOLGA'}</td>`;
+            return `<td style="text-align:center;padding:${pad};background:${trab?'#dcfce7':'#fee2e2'};color:${trab?'#15803d':'#dc2626'};font-weight:800;font-size:${fs}px">${trab?'TRABALHA':'FOLGA'}</td>`;
           }).join('')}
         </tr>`).join('')}
       </tbody>
@@ -1655,18 +1657,20 @@ function buildPrintHTML(id) {
   });
   return `<!DOCTYPE html><html><head><meta charset="UTF-8">
   <style>
-    @page { size: A4; margin: 8mm; }
+    @page { size: A4 landscape; margin: 8mm; }
     body { font-family: Arial, sans-serif; margin: 0; background: white; }
     @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
   </style></head><body>
-  <div style="background:linear-gradient(135deg,#0D7EA4,#065A7A);color:white;padding:16px;text-align:center;border-radius:8px;margin-bottom:16px">
-    <h1 style="font-size:${ftt}px;margin:0;font-weight:900">ESCALA DOMINGO FLV</h1>
-    <h2 style="font-size:${ftt-8}px;margin:6px 0 0;font-weight:500">${MESES[e.mes-1]} / ${e.ano}</h2>
-    <small style="opacity:0.8">${e.colaboradores.length} colaborador(es) · ${e.dias.length} domingo(s)</small>
+  <div style="background:linear-gradient(135deg,#0D7EA4,#065A7A);color:white;padding:8px 16px;border-radius:8px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <div style="font-size:${ftt}px;font-weight:900;margin:0">ESCALA DOMINGO FLV</div>
+      <div style="font-size:${ftt-6}px;opacity:0.9">${MESES[e.mes-1]} / ${e.ano}</div>
+    </div>
+    <div style="text-align:right;opacity:0.85;font-size:10px">${e.colaboradores.length} colaborador(es) · ${e.dias.length} domingo(s)</div>
   </div>
   ${tables}
-  <div style="display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#666;border-top:1px solid #e2e8f0;padding-top:6px">
-    <span>Legenda: <span style="background:#dcfce7;color:#15803d;padding:2px 6px;border-radius:4px;font-weight:800">TRABALHA</span> <span style="background:#fee2e2;color:#dc2626;padding:2px 6px;border-radius:4px;font-weight:800">FOLGA</span></span>
+  <div style="display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#666;border-top:1px solid #e2e8f0;padding-top:4px;margin-top:2px">
+    <span>Legenda: <span style="background:#dcfce7;color:#15803d;padding:1px 5px;border-radius:3px;font-weight:800">TRABALHA</span> <span style="background:#fee2e2;color:#dc2626;padding:1px 5px;border-radius:3px;font-weight:800">FOLGA</span></span>
     <span>Gerado em ${new Date(e.dataCriacao).toLocaleDateString('pt-BR')}, ${new Date(e.dataCriacao).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</span>
   </div>
   </body></html>`;
@@ -1741,16 +1745,23 @@ render();
 // ===================== SERVICE WORKER (PWA OFFLINE) =====================
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'escala-flv-v1';
+    const CACHE = 'escala-flv-v3';
     self.addEventListener('install', e => { self.skipWaiting(); });
-    self.addEventListener('activate', e => { self.clients.claim(); });
+    self.addEventListener('activate', e => {
+      e.waitUntil(
+        caches.keys().then(keys =>
+          Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+        ).then(() => self.clients.claim())
+      );
+    });
     self.addEventListener('fetch', e => {
       if (e.request.method !== 'GET') return;
       e.respondWith(
-        caches.open(CACHE).then(cache =>
-          fetch(e.request).then(res => { cache.put(e.request, res.clone()); return res; })
-          .catch(() => caches.match(e.request))
-        )
+        fetch(e.request).then(res => {
+          const clone = res.clone();
+          caches.open(CACHE).then(cache => cache.put(e.request, clone));
+          return res;
+        }).catch(() => caches.match(e.request))
       );
     });
   `;
