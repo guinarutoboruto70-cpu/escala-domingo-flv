@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)file:///C:/Users/willi/Downloads/escala-debug.html -->
+<!-- saved from url=(0052)file:///C:/Users/willi/Downloads/escala-v-final.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -15,25 +15,10 @@
 
 <!-- PWA Manifest inline -->
 <script>
-const manifestData = {
-  name: "Escala Domingo FLV",
-  short_name: "Escala FLV",
-  description: "Gerencie escalas de domingos automaticamente",
-  start_url: "./",
-  display: "standalone",
-  background_color: "#0D7EA4",
-  theme_color: "#0D7EA4",
-  orientation: "portrait",
-  icons: [
-    { src: "data:image/svg+xml," + encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='32' fill='%230D7EA4'/><text x='96' y='115' font-size='90' text-anchor='middle'>🥬</text><rect x='40' y='130' width='112' height='12' rx='6' fill='white' opacity='0.4'/></svg>`), sizes: "192x192", type: "image/svg+xml" },
-    { src: "data:image/svg+xml," + encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='80' fill='%230D7EA4'/><text x='256' y='310' font-size='240' text-anchor='middle'>🥬</text><rect x='100' y='350' width='312' height='32' rx='16' fill='white' opacity='0.4'/></svg>`), sizes: "512x512", type: "image/svg+xml" }
-  ]
-};
-const blob = new Blob([JSON.stringify(manifestData)], {type:'application/json'});
-const manifestUrl = URL.createObjectURL(blob);
 document.addEventListener('DOMContentLoaded', () => {
   const link = document.createElement('link');
-  link.rel = 'manifest'; link.href = manifestUrl;
+  link.rel = 'manifest';
+  link.href = 'data:application/json;base64,eyJuYW1lIjogIkVzY2FsYSBEb21pbmdvIEZMViIsICJzaG9ydF9uYW1lIjogIkVzY2FsYSBGTFYiLCAiZGVzY3JpcHRpb24iOiAiR2VyZW5jaWUgZXNjYWxhcyBkZSBkb21pbmdvcyBhdXRvbWF0aWNhbWVudGUiLCAic3RhcnRfdXJsIjogIi4vIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwRDdFQTQiLCAidGhlbWVfY29sb3IiOiAiIzBEN0VBNCIsICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnJTIweG1sbnMlM0QlMjdodHRwJTNBJTJGJTJGd3d3LnczLm9yZyUyRjIwMDAlMkZzdmclMjclMjB2aWV3Qm94JTNEJTI3MCUyMDAlMjAxOTIlMjAxOTIlMjclM0UlM0NyZWN0JTIwd2lkdGglM0QlMjcxOTIlMjclMjBoZWlnaHQlM0QlMjcxOTIlMjclMjByeCUzRCUyNzMyJTI3JTIwZmlsbCUzRCUyNyUyMzBEN0VBNCUyNyUyRiUzRSUzQ3RleHQlMjB4JTNEJTI3OTYlMjclMjB5JTNEJTI3MTE1JTI3JTIwZm9udC1zaXplJTNEJTI3OTAlMjclMjB0ZXh0LWFuY2hvciUzRCUyN21pZGRsZSUyNyUzRSVGMCU5RiVBNSVBQyUzQyUyRnRleHQlM0UlM0MlMkZzdmclM0UiLCAic2l6ZXMiOiAiMTkyeDE5MiIsICJ0eXBlIjogImltYWdlL3N2Zyt4bWwifSwgeyJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyUyMHhtbG5zJTNEJTI3aHR0cCUzQSUyRiUyRnd3dy53My5vcmclMkYyMDAwJTJGc3ZnJTI3JTIwdmlld0JveCUzRCUyNzAlMjAwJTIwNTEyJTIwNTEyJTI3JTNFJTNDcmVjdCUyMHdpZHRoJTNEJTI3NTEyJTI3JTIwaGVpZ2h0JTNEJTI3NTEyJTI3JTIwcnglM0QlMjc4MCUyNyUyMGZpbGwlM0QlMjclMjMwRDdFQTQlMjclMkYlM0UlM0N0ZXh0JTIweCUzRCUyNzI1NiUyNyUyMHklM0QlMjczMTAlMjclMjBmb250LXNpemUlM0QlMjcyNDAlMjclMjB0ZXh0LWFuY2hvciUzRCUyN21pZGRsZSUyNyUzRSVGMCU5RiVBNSVBQyUzQyUyRnRleHQlM0UlM0MlMkZzdmclM0UiLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3N2Zyt4bWwifV19';
   document.head.appendChild(link);
 });
 </script>
@@ -42,7 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
 <link rel="apple-touch-icon" href="data:image/svg+xml,&lt;svg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 180 180&#39;&gt;&lt;rect width=&#39;180&#39; height=&#39;180&#39; rx=&#39;40&#39; fill=&#39;%230D7EA4&#39;/&gt;&lt;text x=&#39;90&#39; y=&#39;115&#39; font-size=&#39;90&#39; text-anchor=&#39;middle&#39;&gt;%F0%9F%A5%AC&lt;/text&gt;&lt;/svg&gt;">
 
 
-<style>@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@500;600;700&display=swap");</style>
+<style>@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@500;600;700&display=swap");
+body { font-family: 'Nunito', system-ui, -apple-system, sans-serif; }</style>
 
 <style>
 :root {
@@ -581,7 +567,7 @@ body {
 .link-indicator.ok { color: var(--success); }
 .link-indicator.warn { color: var(--warning); }
 </style>
-<link rel="manifest" href="blob:null/ddf99cd7-0c20-4f8f-859a-400cbdcf7f5d"></head>
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkVzY2FsYSBEb21pbmdvIEZMViIsICJzaG9ydF9uYW1lIjogIkVzY2FsYSBGTFYiLCAiZGVzY3JpcHRpb24iOiAiR2VyZW5jaWUgZXNjYWxhcyBkZSBkb21pbmdvcyBhdXRvbWF0aWNhbWVudGUiLCAic3RhcnRfdXJsIjogIi4vIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwRDdFQTQiLCAidGhlbWVfY29sb3IiOiAiIzBEN0VBNCIsICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnJTIweG1sbnMlM0QlMjdodHRwJTNBJTJGJTJGd3d3LnczLm9yZyUyRjIwMDAlMkZzdmclMjclMjB2aWV3Qm94JTNEJTI3MCUyMDAlMjAxOTIlMjAxOTIlMjclM0UlM0NyZWN0JTIwd2lkdGglM0QlMjcxOTIlMjclMjBoZWlnaHQlM0QlMjcxOTIlMjclMjByeCUzRCUyNzMyJTI3JTIwZmlsbCUzRCUyNyUyMzBEN0VBNCUyNyUyRiUzRSUzQ3RleHQlMjB4JTNEJTI3OTYlMjclMjB5JTNEJTI3MTE1JTI3JTIwZm9udC1zaXplJTNEJTI3OTAlMjclMjB0ZXh0LWFuY2hvciUzRCUyN21pZGRsZSUyNyUzRSVGMCU5RiVBNSVBQyUzQyUyRnRleHQlM0UlM0MlMkZzdmclM0UiLCAic2l6ZXMiOiAiMTkyeDE5MiIsICJ0eXBlIjogImltYWdlL3N2Zyt4bWwifSwgeyJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyUyMHhtbG5zJTNEJTI3aHR0cCUzQSUyRiUyRnd3dy53My5vcmclMkYyMDAwJTJGc3ZnJTI3JTIwdmlld0JveCUzRCUyNzAlMjAwJTIwNTEyJTIwNTEyJTI3JTNFJTNDcmVjdCUyMHdpZHRoJTNEJTI3NTEyJTI3JTIwaGVpZ2h0JTNEJTI3NTEyJTI3JTIwcnglM0QlMjc4MCUyNyUyMGZpbGwlM0QlMjclMjMwRDdFQTQlMjclMkYlM0UlM0N0ZXh0JTIweCUzRCUyNzI1NiUyNyUyMHklM0QlMjczMTAlMjclMjBmb250LXNpemUlM0QlMjcyNDAlMjclMjB0ZXh0LWFuY2hvciUzRCUyN21pZGRsZSUyNyUzRSVGMCU5RiVBNSVBQyUzQyUyRnRleHQlM0UlM0MlMkZzdmclM0UiLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3N2Zyt4bWwifV19"></head>
 <body>
 <div class="app" id="app">
   <div class="screen" id="screen"><div class="fade-in">
@@ -673,7 +659,7 @@ body {
   <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
     <div class="modal-sheet" id="modal-sheet"><!-- modal content --></div>
   </div>
-  <div class="toast" id="toast">📂 Carregado: 13 colaborador(es)</div>
+  <div class="toast" id="toast"></div>
 </div>
 
 <script>
@@ -698,36 +684,29 @@ let state = {
 const STORE_KEY = 'escala_domingo_flv_v1';
 function saveState() {
   try {
-    const data = JSON.stringify({
+    localStorage.setItem(STORE_KEY, JSON.stringify({
       colaboradores: state.colaboradores,
       escalas: state.escalas,
       darkMode: state.darkMode,
       appLink: state.appLink,
-    });
-    localStorage.setItem(STORE_KEY, data);
-    // Debug: show save confirmation with count
-    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
-    const count = saved.colaboradores ? saved.colaboradores.length : 0;
-    showToast(`✓ Salvo! ${count} colaborador(es) no storage`);
+    }));
     return true;
   } catch(e) {
-    showToast('⚠️ Erro ao salvar: ' + e.message);
+    // Only show toast if DOM is ready
+    try { showToast('⚠️ Erro ao salvar! Tente novamente.'); } catch(e2) {}
     return false;
   }
 }
 function loadState() {
   try {
     const raw = localStorage.getItem(STORE_KEY);
-    if (!raw) { showToast('⚠️ Storage vazio ao carregar'); return; }
+    if (!raw) return;
     const d = JSON.parse(raw);
     if (d.colaboradores) state.colaboradores = d.colaboradores;
     if (d.escalas) state.escalas = d.escalas;
     if (d.darkMode !== undefined) state.darkMode = d.darkMode;
     if (d.appLink) state.appLink = d.appLink;
-    showToast(`📂 Carregado: ${state.colaboradores.length} colaborador(es)`);
-  } catch(e) {
-    showToast('⚠️ Erro ao carregar: ' + e.message);
-  }
+  } catch(e) {}
 }
 
 // ===================== NAVIGATION =====================
@@ -1307,12 +1286,21 @@ function toggleTD() {
   renderCadastroInPlace();
 }
 function updateForm() {
-  // Persist nome to state so it's never lost on re-render
   const nome = document.getElementById('f-nome');
   if (!nome) return;
   if (!state.editingColab && !state._newColabId) state._newColabId = uuid();
   if (!state.editingColab) {
-    state.editingColab = { id: state._newColabId, nome: nome.value, cargo:'Colaborador', turno:'Abertura', sexo:'Masculino', status:'Ativo', trabalhaDomingos:true, regraEncarregado:'3x1', ultimaFolgaDomingo:'' };
+    state.editingColab = {
+      id: state._newColabId,
+      nome: nome.value,
+      cargo: 'Colaborador',
+      turno: 'Abertura',
+      sexo: 'Masculino',
+      status: 'Ativo',
+      trabalhaDomingos: true,
+      regraEncarregado: '3x1',
+      ultimaFolgaDomingo: ''
+    };
   } else {
     state.editingColab.nome = nome.value;
   }
@@ -1721,7 +1709,7 @@ if (isGuestMode) {
       }));
       return true;
     } catch(e) {
-      showToast('⚠️ Erro ao salvar! Memória cheia ou bloqueada.');
+      try { showToast('⚠️ Erro ao salvar! Tente novamente.'); } catch(e2) {}
       return false;
     }
   };
@@ -1752,34 +1740,12 @@ if (isGuestMode) {
 }
 render();
 
-// ===================== SERVICE WORKER (PWA OFFLINE) =====================
+// ===================== SERVICE WORKER =====================
+// SW registration via blob: URL blocked in PWA - unregister old ones
 if ('serviceWorker' in navigator) {
-  const swCode = `
-    const CACHE = 'escala-flv-v3';
-    self.addEventListener('install', e => { self.skipWaiting(); });
-    self.addEventListener('activate', e => {
-      e.waitUntil(
-        caches.keys().then(keys =>
-          Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-        ).then(() => self.clients.claim())
-      );
-    });
-    self.addEventListener('fetch', e => {
-      if (e.request.method !== 'GET') return;
-      e.respondWith(
-        fetch(e.request).then(res => {
-          const clone = res.clone();
-          caches.open(CACHE).then(cache => cache.put(e.request, clone));
-          return res;
-        }).catch(() => caches.match(e.request))
-      );
-    });
-  `;
-  try {
-    const swBlob = new Blob([swCode], {type:'application/javascript'});
-    const swUrl = URL.createObjectURL(swBlob);
-    navigator.serviceWorker.register(swUrl).catch(()=>{});
-  } catch(e) {}
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(r => r.unregister());
+  }).catch(() => {});
 }
 
 // ===================== PWA INSTALL PROMPT =====================
