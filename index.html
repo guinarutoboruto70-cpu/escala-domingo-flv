@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0054)file:///C:/Users/willi/Downloads/escala-v-final_1.html -->
+<!-- saved from url=(0054)file:///C:/Users/willi/Downloads/escala-corrigido.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -1675,6 +1675,40 @@ function buildPrintHTML(id) {
 }
 
 // ===================== ATTACH HANDLERS =====================
+function testSave() {
+  try {
+    // Test 1: Can write to localStorage?
+    localStorage.setItem('_test_key', 'test123');
+    const read = localStorage.getItem('_test_key');
+    localStorage.removeItem('_test_key');
+    if (read !== 'test123') { alert('❌ ERRO: localStorage não está salvando corretamente!\nLeia: ' + read); return; }
+    
+    // Test 2: Is current data saved?
+    const stored = localStorage.getItem('escala_domingo_flv_v1');
+    const storedData = stored ? JSON.parse(stored) : null;
+    const storedCount = storedData ? (storedData.colaboradores||[]).length : 0;
+    
+    // Test 3: Save current state
+    saveState();
+    const afterSave = localStorage.getItem('escala_domingo_flv_v1');
+    const afterData = afterSave ? JSON.parse(afterSave) : null;
+    const afterCount = afterData ? (afterData.colaboradores||[]).length : 0;
+    
+    alert(
+      '✅ localStorage funcionando!\n\n' +
+      '📊 Memória: ' + state.colaboradores.length + ' colaboradores\n' +
+      '💾 Storage antes: ' + storedCount + '\n' +
+      '💾 Storage depois: ' + afterCount + '\n\n' +
+      (afterCount === state.colaboradores.length 
+        ? '✅ Tudo sincronizado!' 
+        : '❌ DESSINCRONIZADO! Memória ≠ Storage')
+    );
+    render();
+  } catch(e) {
+    alert('❌ ERRO no localStorage:\n' + e.message + '\n\nPossível causa: modo privado ou storage bloqueado.');
+  }
+}
+
 function attachHandlers() {
   const si = document.getElementById('search-input');
   if (si) si.focus && false; // don't auto-focus
