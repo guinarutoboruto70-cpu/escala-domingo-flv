@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0054)file:///C:/Users/willi/Downloads/escala-corrigido.html -->
+<!-- saved from url=(0055)file:///C:/Users/willi/Downloads/escala-definitivo.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -600,7 +600,7 @@ body {
       <div class="stat-card">
         <div>
           <div class="label">Escalas</div>
-          <div class="number" style="color:var(--accent)">1</div>
+          <div class="number" style="color:var(--accent)">0</div>
         </div>
         <div class="stat-icon pink"><span class="material-icons-round">📅</span></div>
       </div>
@@ -680,34 +680,136 @@ let state = {
   appLink: window.location.href.split('?')[0],
 };
 
-// ===================== STORAGE =====================
+// ===================== STORAGE (TRIPLE LAYER para MIUI/HyperOS) =====================
 const STORE_KEY = 'escala_domingo_flv_v1';
-function saveState() {
-  try {
-    localStorage.setItem(STORE_KEY, JSON.stringify({
-      colaboradores: state.colaboradores,
-      escalas: state.escalas,
-      darkMode: state.darkMode,
-      appLink: state.appLink,
-    }));
-    return true;
-  } catch(e) {
-    // Only show toast if DOM is ready
-    try { showToast('⚠️ Erro ao salvar! Tente novamente.'); } catch(e2) {}
-    return false;
-  }
+
+// ── Camada 3: IndexedDB (mais robusto no Android/MIUI) ──
+let _idb = null;
+function openIDB() {
+  return new Promise((resolve) => {
+    if (_idb) { resolve(_idb); return; }
+    try {
+      const req = indexedDB.open('escala_flv_db', 1);
+      req.onupgradeneeded = e => {
+        e.target.result.createObjectStore('dados', { keyPath: 'id' });
+      };
+      req.onsuccess = e => { _idb = e.target.result; resolve(_idb); };
+      req.onerror = () => resolve(null);
+    } catch(e) { resolve(null); }
+  });
 }
-function loadState() {
+function idbSave(data) {
+  openIDB().then(db => {
+    if (!db) return;
+    try {
+      const tx = db.transaction('dados', 'readwrite');
+      tx.objectStore('dados').put({ id: STORE_KEY, payload: JSON.stringify(data) });
+    } catch(e) {}
+  });
+}
+function idbLoad() {
+  return openIDB().then(db => {
+    if (!db) return null;
+    return new Promise(resolve => {
+      try {
+        const tx = db.transaction('dados', 'readonly');
+        const req = tx.objectStore('dados').get(STORE_KEY);
+        req.onsuccess = e => resolve(e.target.result ? JSON.parse(e.target.result.payload) : null);
+        req.onerror = () => resolve(null);
+      } catch(e) { resolve(null); }
+    });
+  });
+}
+
+// ── Camada 4: Cookie backup ──
+function cookieSave(data) {
   try {
-    const raw = localStorage.getItem(STORE_KEY);
-    if (!raw) return;
-    const d = JSON.parse(raw);
-    if (d.colaboradores) state.colaboradores = d.colaboradores;
-    if (d.escalas) state.escalas = d.escalas;
-    if (d.darkMode !== undefined) state.darkMode = d.darkMode;
-    if (d.appLink) state.appLink = d.appLink;
+    const str = encodeURIComponent(JSON.stringify(data));
+    if (str.length < 3500) { // cookie limit ~4KB
+      document.cookie = STORE_KEY + '=' + str + ';path=/;max-age=31536000;SameSite=Strict';
+    }
   } catch(e) {}
 }
+function cookieLoad() {
+  try {
+    const match = document.cookie.match(new RegExp('(?:^|;\\s*)' + STORE_KEY + '=([^;]*)'));
+    return match ? JSON.parse(decodeURIComponent(match[1])) : null;
+  } catch(e) { return null; }
+}
+
+// ── Save: escreve em TODAS as camadas ──
+function saveState() {
+  const data = {
+    colaboradores: state.colaboradores,
+    escalas: state.escalas,
+    darkMode: state.darkMode,
+    appLink: state.appLink,
+    _savedAt: Date.now(),
+  };
+  // Camada 1: localStorage
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch(e) {}
+  // Camada 2: sessionStorage
+  try { sessionStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch(e) {}
+  // Camada 3: IndexedDB (assíncrono)
+  idbSave(data);
+  // Camada 4: Cookie (dados pequenos)
+  cookieSave({ colaboradores: state.colaboradores, escalas: state.escalas, darkMode: state.darkMode, appLink: state.appLink });
+  return true;
+}
+
+// ── Load: tenta cada camada em ordem, usa a mais recente ──
+function loadState() {
+  let best = null;
+  let bestTime = 0;
+
+  // Camada 1: localStorage
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) {
+      const d = JSON.parse(raw);
+      if ((d._savedAt || 0) > bestTime) { best = d; bestTime = d._savedAt || 0; }
+    }
+  } catch(e) {}
+
+  // Camada 2: sessionStorage
+  try {
+    const raw = sessionStorage.getItem(STORE_KEY);
+    if (raw) {
+      const d = JSON.parse(raw);
+      if ((d._savedAt || 0) > bestTime) { best = d; bestTime = d._savedAt || 0; }
+    }
+  } catch(e) {}
+
+  // Camada 4: Cookie
+  try {
+    const d = cookieLoad();
+    if (d && (d._savedAt || 0) > bestTime) { best = d; bestTime = d._savedAt || 0; }
+  } catch(e) {}
+
+  // Aplica o melhor encontrado
+  if (best) {
+    if (best.colaboradores) state.colaboradores = best.colaboradores;
+    if (best.escalas) state.escalas = best.escalas;
+    if (best.darkMode !== undefined) state.darkMode = best.darkMode;
+    if (best.appLink) state.appLink = best.appLink;
+  }
+
+  // Camada 3: IndexedDB (assíncrono - verifica depois)
+  idbLoad().then(d => {
+    if (!d) return;
+    if ((d._savedAt || 0) > bestTime) {
+      // IDB tem dados mais recentes - aplica e re-renderiza
+      if (d.colaboradores) state.colaboradores = d.colaboradores;
+      if (d.escalas) state.escalas = d.escalas;
+      if (d.darkMode !== undefined) state.darkMode = d.darkMode;
+      if (d.appLink) state.appLink = d.appLink;
+      // Re-salva em todas as camadas para sincronizar
+      saveState();
+      try { render(); } catch(e) {}
+    }
+  });
+}
+
 
 // ===================== NAVIGATION =====================
 const TAB_PAGES = ['home', 'escalas', 'equipe'];
@@ -1722,11 +1824,13 @@ const isGuestMode = urlParams.get('novo') === 'true';
 if (isGuestMode) {
   // Guest mode: use a SEPARATE storage key so original data is untouched
   state._storeKey = 'escala_domingo_flv_guest_v1';
-  // Override save/load to use guest key
-  const origLoad = loadState;
+  state._isGuest = true;
+  // Simple single-layer for guest mode (temporary data)
   loadState = function() {
     try {
-      const d = JSON.parse(localStorage.getItem(state._storeKey) || '{}');
+      const raw = localStorage.getItem(state._storeKey) || sessionStorage.getItem(state._storeKey);
+      if (!raw) return;
+      const d = JSON.parse(raw);
       if (d.colaboradores) state.colaboradores = d.colaboradores;
       if (d.escalas) state.escalas = d.escalas;
       if (d.darkMode !== undefined) state.darkMode = d.darkMode;
@@ -1734,20 +1838,11 @@ if (isGuestMode) {
     } catch(e) {}
   };
   saveState = function() {
-    try {
-      localStorage.setItem(state._storeKey, JSON.stringify({
-        colaboradores: state.colaboradores,
-        escalas: state.escalas,
-        darkMode: state.darkMode,
-        appLink: state.appLink,
-      }));
-      return true;
-    } catch(e) {
-      try { showToast('⚠️ Erro ao salvar! Tente novamente.'); } catch(e2) {}
-      return false;
-    }
+    const data = JSON.stringify({ colaboradores: state.colaboradores, escalas: state.escalas, darkMode: state.darkMode, appLink: state.appLink });
+    try { localStorage.setItem(state._storeKey, data); } catch(e) {}
+    try { sessionStorage.setItem(state._storeKey, data); } catch(e) {}
+    return true;
   };
-  state._isGuest = true;
   loadState();
 } else {
   loadState();
