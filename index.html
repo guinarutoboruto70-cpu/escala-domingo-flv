@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0055)file:///C:/Users/willi/Downloads/escala-definitivo.html -->
+<!-- saved from url=(0047)file:///C:/Users/willi/Downloads/escala-v6.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -1571,10 +1571,10 @@ function renderVisualizar() {
         <button class="vis-action-btn png" onclick="exportPNG('${e.id}')">
           <span class="material-icons-round">🖼️</span>PNG
         </button>
-        <button class="vis-action-btn whats" onclick="shareWhatsApp('${e.id}')">
+        <button class="vis-action-btn whats" onclick="openWhatsAppModal('${e.id}')">
           <span class="material-icons-round">📤</span>WhatsApp
         </button>
-        <button class="vis-action-btn print" onclick="printEscala('${e.id}')">
+        <button class="vis-action-btn print" onclick="openPrintModal('${e.id}')">
           <span class="material-icons-round">🖨️</span>Imprimir
         </button>
       </div>
@@ -1641,30 +1641,166 @@ function showPrintPreview(id) {
   const w = window.open('', '_blank');
   if (w) { w.document.write(html); w.document.close(); }
 }
-function printEscala(id) {
-  const html = buildPrintHTML(id);
+// ── IMPRESSÃO com escolha de orientação ──
+function openPrintModal(id) {
+  document.getElementById('modal-sheet').innerHTML = `
+    <div class="modal-handle"></div>
+    <div class="modal-title">🖨️ Imprimir Escala</div>
+    <div class="modal-sub">Escolha a orientação do papel</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px">
+      <button onclick="printEscala('${id}','landscape');closeModal()" style="padding:16px;border-radius:12px;background:linear-gradient(135deg,#0D7EA4,#065A7A);border:none;color:white;font-size:15px;font-weight:800;font-family:Nunito,sans-serif;cursor:pointer;display:flex;align-items:center;gap:12px">
+        <span style="font-size:28px">🖨️</span>
+        <div style="text-align:left">
+          <div>Paisagem (Recomendado)</div>
+          <div style="font-size:12px;opacity:0.8;font-weight:400">Melhor para muitos colaboradores</div>
+        </div>
+      </button>
+      <button onclick="printEscala('${id}','portrait');closeModal()" style="padding:16px;border-radius:12px;background:linear-gradient(135deg,#6366F1,#4F46E5);border:none;color:white;font-size:15px;font-weight:800;font-family:Nunito,sans-serif;cursor:pointer;display:flex;align-items:center;gap:12px">
+        <span style="font-size:28px">📄</span>
+        <div style="text-align:left">
+          <div>Retrato (Normal)</div>
+          <div style="font-size:12px;opacity:0.8;font-weight:400">Folha na posição vertical</div>
+        </div>
+      </button>
+      <button onclick="closeModal()" style="padding:14px;border-radius:12px;background:var(--surface);border:1px solid var(--border);color:var(--fg2);font-size:14px;font-weight:700;font-family:Nunito,sans-serif;cursor:pointer">
+        Cancelar
+      </button>
+    </div>`;
+  openModal();
+}
+
+function printEscala(id, orientation) {
+  const html = buildPrintHTML(id, orientation || 'landscape');
   const w = window.open('', '_blank');
   if (w) { w.document.write(html); w.document.close(); setTimeout(() => w.print(), 500); }
 }
-function exportPDF(id) { printEscala(id); showToast('📄 Abrindo PDF para salvar...'); }
-function exportPNG(id) { showToast('🖼️ Captura de tela disponível via Print'); showPrintPreview(id); }
-function shareWhatsApp(id) {
+function exportPDF(id) {
+  openPrintModal(id);
+  showToast('📄 Escolha a orientação para gerar o PDF');
+}
+function exportPNG(id) { showToast('🖼️ Use a opção Imprimir e salve como PDF/imagem'); openPrintModal(id); }
+
+// ── WHATSAPP com seleção de domingo ──
+function openWhatsAppModal(id) {
   const e = state.escalas.find(x => x.id === id);
   if (!e) return;
-  let msg = `📅 *Escala ${MESES[e.mes-1]}/${e.ano}*\n\n`;
-  ['Abertura','Fechamento'].forEach(t => {
-    const cols = e.colaboradores.filter(c => c.turno === t);
-    if (!cols.length) return;
-    msg += `*Turno ${t}:*\n`;
-    cols.forEach(c => {
-      const folgas = e.dias.filter(d => d.colaboradoresFolgam.includes(c.id)).map((d,i) => `Dom ${d.domingo}`);
-      msg += `• ${c.nome} - Folga: ${folgas.length ? folgas.join(', ') : 'nenhuma'}\n`;
-    });
-    msg += '\n';
-  });
-  copyText(msg);
-  openWhatsApp(msg);
+  const diasHtml = e.dias.map((d, i) => {
+    const dateStr = new Date(d.data).toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
+    return `<button id="wpp-dom-${i}" onclick="toggleWppDom(${i})" style="padding:10px 14px;border-radius:10px;background:var(--surface2);border:2px solid var(--border);color:var(--fg);font-size:13px;font-weight:700;font-family:Nunito,sans-serif;cursor:pointer;transition:all 0.2s;text-align:center">
+      <div>Dom ${i+1}</div>
+      <div style="font-size:11px;font-weight:400;color:var(--fg2)">${dateStr}</div>
+    </button>`;
+  }).join('');
+
+  document.getElementById('modal-sheet').innerHTML = `
+    <div class="modal-handle"></div>
+    <div class="modal-title">📱 Enviar por WhatsApp</div>
+    <div class="modal-sub">Selecione qual domingo enviar</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px">
+      ${diasHtml}
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:13px;font-weight:700;color:var(--fg2);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:8px">Turno</label>
+      <div style="display:flex;gap:8px">
+        <button id="wpp-turno-todos" onclick="selectWppTurno('Todos')" style="flex:1;padding:10px;border-radius:10px;background:var(--primary);border:2px solid var(--primary);color:var(--bg);font-size:13px;font-weight:700;font-family:Nunito,sans-serif;cursor:pointer">Todos</button>
+        <button id="wpp-turno-Abertura" onclick="selectWppTurno('Abertura')" style="flex:1;padding:10px;border-radius:10px;background:var(--surface2);border:2px solid var(--border);color:var(--fg);font-size:13px;font-weight:700;font-family:Nunito,sans-serif;cursor:pointer">Abertura</button>
+        <button id="wpp-turno-Fechamento" onclick="selectWppTurno('Fechamento')" style="flex:1;padding:10px;border-radius:10px;background:var(--surface2);border:2px solid var(--border);color:var(--fg);font-size:13px;font-weight:700;font-family:Nunito,sans-serif;cursor:pointer">Fechamento</button>
+      </div>
+    </div>
+    <button onclick="sendWhatsAppEscala('${id}')" style="width:100%;padding:16px;border-radius:12px;background:#25D366;border:none;color:white;font-size:15px;font-weight:800;font-family:Nunito,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px">
+      <span>📱</span>Enviar no WhatsApp
+    </button>
+    <button onclick="closeModal()" style="width:100%;margin-top:10px;padding:14px;border-radius:12px;background:var(--surface);border:1px solid var(--border);color:var(--fg2);font-size:14px;font-weight:700;font-family:Nunito,sans-serif;cursor:pointer">
+      Cancelar
+    </button>`;
+  openModal();
+  // State for selection
+  window._wppState = { domIdx: null, turno: 'Todos' };
 }
+
+function toggleWppDom(i) {
+  const prev = window._wppState.domIdx;
+  window._wppState.domIdx = (prev === i) ? null : i;
+  // Update button styles
+  document.querySelectorAll('[id^="wpp-dom-"]').forEach((btn, idx) => {
+    const selected = idx === window._wppState.domIdx;
+    btn.style.background = selected ? 'var(--primary)' : 'var(--surface2)';
+    btn.style.borderColor = selected ? 'var(--primary)' : 'var(--border)';
+    btn.style.color = selected ? 'var(--bg)' : 'var(--fg)';
+  });
+}
+
+function selectWppTurno(turno) {
+  window._wppState.turno = turno;
+  ['Todos','Abertura','Fechamento'].forEach(t => {
+    const btn = document.getElementById('wpp-turno-' + t);
+    if (!btn) return;
+    const selected = t === turno;
+    btn.style.background = selected ? 'var(--primary)' : 'var(--surface2)';
+    btn.style.borderColor = selected ? 'var(--primary)' : 'var(--border)';
+    btn.style.color = selected ? 'var(--bg)' : 'var(--fg)';
+  });
+}
+
+function sendWhatsAppEscala(id) {
+  const e = state.escalas.find(x => x.id === id);
+  if (!e) return;
+  const { domIdx, turno } = window._wppState || { domIdx: null, turno: 'Todos' };
+
+  if (domIdx === null) {
+    // Enviar TODOS os domingos
+    let msg = `🥬 *ESCALA DOMINGO FLV*\n📅 ${MESES[e.mes-1]} / ${e.ano}\n\n`;
+    e.dias.forEach((d, i) => {
+      const dateStr = new Date(d.data).toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
+      msg += `*Dom ${i+1} — ${dateStr}*\n`;
+      const trabalhando = e.colaboradores.filter(c => {
+        if (turno !== 'Todos' && c.turno !== turno) return false;
+        return d.colaboradoresTrabalham.includes(c.id);
+      });
+      const porTurno = { Abertura: [], Fechamento: [] };
+      trabalhando.forEach(c => porTurno[c.turno].push(c.nome));
+      if (turno === 'Todos') {
+        if (porTurno.Abertura.length) msg += `🌅 *Abertura:* ${porTurno.Abertura.join(', ')}\n`;
+        if (porTurno.Fechamento.length) msg += `🌆 *Fechamento:* ${porTurno.Fechamento.join(', ')}\n`;
+      } else {
+        msg += `👥 ${trabalhando.map(c => c.nome).join(', ')}\n`;
+      }
+      msg += '\n';
+    });
+    closeModal();
+    openWhatsApp(msg);
+  } else {
+    // Enviar DOMINGO ESPECÍFICO
+    const d = e.dias[domIdx];
+    const dateStr = new Date(d.data).toLocaleDateString('pt-BR', {weekday:'long', day:'2-digit', month:'long'});
+    let msg = `🥬 *ESCALA DOMINGO FLV*\n📅 ${dateStr}\n\n`;
+    msg += `*Quem trabalha esse domingo:*\n\n`;
+    const trabalhando = e.colaboradores.filter(c => {
+      if (turno !== 'Todos' && c.turno !== turno) return false;
+      return d.colaboradoresTrabalham.includes(c.id);
+    });
+    const porTurno = { Abertura: [], Fechamento: [] };
+    trabalhando.forEach(c => porTurno[c.turno].push(c.nome));
+    if (turno === 'Todos' || turno === 'Abertura') {
+      if (porTurno.Abertura.length) {
+        msg += `🌅 *Abertura (${porTurno.Abertura.length}):*\n`;
+        porTurno.Abertura.forEach(n => msg += `• ${n}\n`);
+        msg += '\n';
+      }
+    }
+    if (turno === 'Todos' || turno === 'Fechamento') {
+      if (porTurno.Fechamento.length) {
+        msg += `🌆 *Fechamento (${porTurno.Fechamento.length}):*\n`;
+        porTurno.Fechamento.forEach(n => msg += `• ${n}\n`);
+      }
+    }
+    closeModal();
+    openWhatsApp(msg);
+  }
+}
+
+function shareWhatsApp(id) { openWhatsAppModal(id); }
+
 function exportExcel(id) {
   const e = state.escalas.find(x => x.id === id);
   if (!e) return;
@@ -1724,15 +1860,19 @@ function showReport(id) {
   openModal();
 }
 
-function buildPrintHTML(id) {
+function buildPrintHTML(id, orientation) {
   const e = state.escalas.find(x => x.id === id);
   if (!e) return '';
+  const isLandscape = (orientation || 'landscape') === 'landscape';
   const count = e.colaboradores.length;
-  // Landscape A4 (297x210mm) fits many more rows
-  const fs  = count <= 15 ? 11 : count <= 22 ? 10 : count <= 30 ? 9 : 8;
-  const fnm = count <= 15 ? 11 : count <= 22 ? 10 : count <= 30 ? 9 : 8;
-  const ftt = count <= 15 ? 22 : count <= 22 ? 20 : 18;
-  const pad = count <= 15 ? '5px 8px' : count <= 22 ? '4px 6px' : '3px 4px';
+  // Font sizes based on orientation and count
+  const fs  = isLandscape ? (count <= 15 ? 11 : count <= 22 ? 10 : count <= 30 ? 9 : 8)
+                           : (count <= 10 ? 11 : count <= 15 ? 10 : count <= 20 ? 9 : 8);
+  const fnm = fs;
+  const ftt = isLandscape ? (count <= 15 ? 22 : count <= 22 ? 20 : 18)
+                           : (count <= 10 ? 20 : 18);
+  const pad = isLandscape ? (count <= 15 ? '5px 8px' : count <= 22 ? '4px 6px' : '3px 4px')
+                           : (count <= 10 ? '5px 8px' : '4px 6px');
   const turnos = ['Abertura', 'Fechamento'];
   let tables = '';
   turnos.forEach(t => {
@@ -1741,7 +1881,7 @@ function buildPrintHTML(id) {
     tables += `<h3 style="font-size:${fnm+1}px;font-weight:800;margin:8px 0 4px;color:#065A7A;text-transform:uppercase;letter-spacing:1px;border-left:4px solid #0D7EA4;padding-left:8px">Turno de ${t}</h3>
     <table style="border-collapse:collapse;width:100%;margin-bottom:8px;font-size:${fs}px">
       <thead><tr style="background:#0D7EA4;color:white">
-        <th style="padding:${pad};text-align:left;min-width:100px">Nome</th>
+        <th style="padding:${pad};text-align:left;min-width:${isLandscape?'100':'120'}px">Nome</th>
         ${e.dias.map((d,i) => `<th style="padding:${pad};text-align:center;white-space:nowrap">Dom ${i+1}<br><span style="font-size:${fs-2}px">${new Date(d.data).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</span></th>`).join('')}
       </tr></thead>
       <tbody>
@@ -1757,7 +1897,7 @@ function buildPrintHTML(id) {
   });
   return `<!DOCTYPE html><html><head><meta charset="UTF-8">
   <style>
-    @page { size: A4 landscape; margin: 8mm; }
+    @page { size: A4 ${isLandscape ? 'landscape' : 'portrait'}; margin: 8mm; }
     body { font-family: Arial, sans-serif; margin: 0; background: white; }
     @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
   </style></head><body>
@@ -1766,7 +1906,7 @@ function buildPrintHTML(id) {
       <div style="font-size:${ftt}px;font-weight:900;margin:0">ESCALA DOMINGO FLV</div>
       <div style="font-size:${ftt-6}px;opacity:0.9">${MESES[e.mes-1]} / ${e.ano}</div>
     </div>
-    <div style="text-align:right;opacity:0.85;font-size:10px">${e.colaboradores.length} colaborador(es) · ${e.dias.length} domingo(s)</div>
+    <div style="text-align:right;opacity:0.85;font-size:10px">${e.colaboradores.length} colaborador(es) · ${e.dias.length} domingo(s)<br>${isLandscape ? '📄 Paisagem' : '📋 Retrato'}</div>
   </div>
   ${tables}
   <div style="display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#666;border-top:1px solid #e2e8f0;padding-top:4px;margin-top:2px">
